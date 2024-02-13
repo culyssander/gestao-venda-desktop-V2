@@ -289,12 +289,12 @@ public final class FormularioUsuarioControlador implements ActionListener, KeyLi
         
         permissoes.stream()
                 .forEach(p -> {
-                    JCheckBox checkBox = map.get(p.getNome());                    
+                    JCheckBox checkBox = map.get(p.getNome());   
                     if (checkBox != null) {
+                        checkBox.setToolTipText(p.getDescricao());
                         checkBox.setSelected(true);
                     }
                 });
-        
     }
     
     private void limpaPermissao() {
