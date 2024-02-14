@@ -18,11 +18,6 @@ public class Tabela extends JTable {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 TabelaCabecalho tabelaCabecalho = new TabelaCabecalho(value + "");
-                
-//                if (column == 3) {
-//                    tabelaCabecalho.setHorizontalAlignment(JLabel.CENTER);
-//                }
-                
                 return tabelaCabecalho;
             }
             

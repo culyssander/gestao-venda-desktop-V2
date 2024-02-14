@@ -37,6 +37,18 @@
             <artifactId>spring-security-core</artifactId>
             <version>6.2.1</version>
         </dependency>
+        
+        <dependency>
+            <groupId>net.java.dev.timingframework</groupId>
+            <artifactId>timingframework</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.miginfocom</groupId>
+            <artifactId>miglayout</artifactId>
+            <version>4.0</version>
+        </dependency>
 
         <dependency> 
             <groupId>org.reflections</groupId> 

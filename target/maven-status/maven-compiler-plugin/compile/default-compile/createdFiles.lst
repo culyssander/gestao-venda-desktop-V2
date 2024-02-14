@@ -17,6 +17,7 @@ com\dxc\gestao\venda\visao\componentes\PanelBoard.class
 com\dxc\gestao\venda\visao\formulario\Login$6.class
 com\dxc\gestao\venda\visao\formulario\FormularioProdutoRegistra.class
 com\dxc\gestao\venda\modelo\entidade\PermissaoUsuario.class
+com\dxc\gestao\venda\modelo\tabela\modelo\CategoriaModelo.class
 com\dxc\gestao\venda\modelo\dto\HistoricoEstoqueDto$HistoricoEstoqueDtoBuilder.class
 com\dxc\gestao\venda\visao\modelo\MenuModelo.class
 com\dxc\gestao\venda\visao\componentes\Menu.class
@@ -50,15 +51,19 @@ com\dxc\gestao\venda\visao\componentes\Tabela$1.class
 com\dxc\gestao\venda\modelo\servico\PermissaoServico.class
 com\dxc\gestao\venda\modelo\entidade\Permissao.class
 com\dxc\gestao\venda\modelo\entidade\Venda.class
+com\dxc\gestao\venda\visao\componentes\CampoDaSenha.class
+com\dxc\gestao\venda\visao\formulario\Formulario.class
 com\dxc\gestao\venda\modelo\tabela\modelo\UsuarioModelo.class
 com\dxc\gestao\venda\controlador\FormularioClienteControlador.class
 com\dxc\gestao\venda\modelo\servico\EstoqueServico.class
 com\dxc\gestao\venda\visao\formulario\FormularioCliente.class
 com\dxc\gestao\venda\visao\formulario\Dashboard$1.class
+com\dxc\gestao\venda\visao\formulario\FormularioInfo.class
 com\dxc\gestao\venda\controlador\FormularioPrincipalControlador$1.class
 com\dxc\gestao\venda\visao\formulario\Login$1.class
 com\dxc\gestao\venda\modelo\servico\PermissaoServico$2.class
 com\dxc\gestao\venda\modelo\servico\LoginServico.class
+com\dxc\gestao\venda\visao\componentes\CampoDeTexto.class
 com\dxc\gestao\venda\visao\evento\EventoMenuSelectionado.class
 com\dxc\gestao\venda\visao\componentes\Pesquisar.class
 com\dxc\gestao\venda\modelo\dto\LoginResponse.class
@@ -73,6 +78,7 @@ com\dxc\gestao\venda\visao\componentes\Cartao.class
 com\dxc\gestao\venda\visao\formulario\Dashboard.class
 com\dxc\gestao\venda\modelo\dto\LoginResponse$LoginResponseBuilder.class
 com\dxc\gestao\venda\controlador\FormularioPrincipalControlador$2.class
+com\dxc\gestao\venda\visao\componentes\ComboBox.class
 com\dxc\gestao\venda\controlador\LoginControlador.class
 com\dxc\gestao\venda\visao\formulario\FormularioUsuario$6.class
 com\dxc\gestao\venda\modelo\entidade\Categoria.class
@@ -86,6 +92,8 @@ com\dxc\gestao\venda\visao\modelo\CartaoModelo$CartaoModeloBuilder.class
 com\dxc\gestao\venda\modelo\entidade\Usuario$UsuarioBuilder.class
 com\dxc\gestao\venda\visao\formulario\FormularioEstoque$1.class
 com\dxc\gestao\venda\visao\formulario\FormularioEstoque.class
+com\dxc\gestao\venda\visao\componentes\Botao.class
+com\dxc\gestao\venda\visao\formulario\Formulario$1.class
 com\dxc\gestao\venda\modelo\entidade\EstoqueTipo.class
 com\dxc\gestao\venda\visao\formulario\FormularioPrincipal$2.class
 com\dxc\gestao\venda\modelo\servico\EntidadeServico$1.class
@@ -104,6 +112,7 @@ com\dxc\gestao\venda\visao\formulario\Login.class
 com\dxc\gestao\venda\controlador\FormularioVendaControlador.class
 com\dxc\gestao\venda\modelo\entidade\PermissaoUsuario$PermissaoUsuarioBuilder.class
 com\dxc\gestao\venda\modelo\servico\ProdutoServico.class
+com\dxc\gestao\venda\visao\componentes\Botao$2.class
 com\dxc\gestao\venda\visao\formulario\FormularioCliente$2.class
 com\dxc\gestao\venda\modelo\entidade\VendaItem.class
 com\dxc\gestao\venda\visao\componentes\Tabela.class
@@ -117,6 +126,7 @@ com\dxc\gestao\venda\modelo\servico\UsuarioServico.class
 com\dxc\gestao\venda\visao\formulario\FormularioEstoque$2.class
 com\dxc\gestao\venda\visao\formulario\Login$4.class
 com\dxc\gestao\venda\visao\componentes\ListaMenu$3.class
+com\dxc\gestao\venda\visao\formulario\FormularioInfoProdutoCategoria.class
 com\dxc\gestao\venda\visao\componentes\BarraDeRolar.class
 com\dxc\gestao\venda\visao\formulario\FormularioVenda$3.class
 com\dxc\gestao\venda\controlador\DashboardControlador.class
@@ -127,3 +137,4 @@ com\dxc\gestao\venda\modelo\entidade\EstoqueHistorico.class
 com\dxc\gestao\venda\modelo\conexao\Conexao.class
 com\dxc\gestao\venda\visao\formulario\FormularioProduto.class
 com\dxc\gestao\venda\modelo\entidade\Cliente.class
+com\dxc\gestao\venda\visao\componentes\Botao$1.class

@@ -54,7 +54,7 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
     public void keyReleased(KeyEvent e) {}
 
     private void adicionar() {
-        formularioProduto.getDashboard().setForm(formularioProduto.getFormularioProdutoRegistra());
+        formularioProduto.getDashboard().setForm(formularioProduto.getFormulario());
     }
     
 }

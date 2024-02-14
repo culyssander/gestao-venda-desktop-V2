@@ -15,6 +15,7 @@ public class FormularioEstoqueRegistra extends javax.swing.JPanel {
      */
     public FormularioEstoqueRegistra() {
         initComponents();
+        
     }
 
     /**

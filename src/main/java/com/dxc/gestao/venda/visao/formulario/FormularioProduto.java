@@ -11,6 +11,7 @@ public class FormularioProduto extends javax.swing.JPanel {
     
     private final FormularioProdutoControlador formularioProdutoControlador;
     private FormularioProdutoRegistra formularioProdutoRegistra;
+    private Formulario formulario;
     private Dashboard dashboard;
     private int menuSelectionadoIndex = -1;
     private Cabecalho cabecalho;
@@ -26,6 +27,7 @@ public class FormularioProduto extends javax.swing.JPanel {
         
         formularioProdutoControlador = new FormularioProdutoControlador(this);
         formularioProdutoRegistra = new FormularioProdutoRegistra();
+        formulario = new Formulario();
         this.cabecalho = cabecalho;
         this.dashboard = dashboard;
         
@@ -33,6 +35,10 @@ public class FormularioProduto extends javax.swing.JPanel {
         eventoDoTeclado();
     }
 
+    public Formulario getFormulario() {
+        return formulario;
+    }
+    
     public Dashboard getDashboard() {
         return dashboard;
     }
