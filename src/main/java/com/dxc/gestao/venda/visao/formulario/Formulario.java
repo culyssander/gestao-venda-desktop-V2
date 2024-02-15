@@ -47,9 +47,26 @@ public class Formulario extends javax.swing.JPanel {
                     fractionInfo = 1f - fraction;
                     fractionProduto = fraction;
                     
+                    if (fraction >= 0.5f) {
+                        formularioInfo.produtoDireita(fractionInfo * 100);
+                    } else {
+                        formularioInfo.categoriaDireita(fractionProduto * 100);
+                    }
+                    
                 } else {
                     fractionInfo = fraction;
                     fractionProduto = 1f - fraction;
+                    
+                    if (fraction <= 0.5f) {
+                        formularioInfo.produtoEsquerda(fraction * 100);
+                    } else {
+                        formularioInfo.categoriaEsquerda((1f - fraction) * 100);
+                    }
+                }
+                
+                if (fraction >= 0.5f) {
+                    System.out.println("FORMULARIO: " + estaCategoria);
+                    produtoCategoria.mostrarProduto(estaCategoria);
                 }
                 
                 fractionInfo = Double.parseDouble(decimalFormat.format(fractionInfo));
@@ -67,7 +84,7 @@ public class Formulario extends javax.swing.JPanel {
             
         };
         
-        Animator animator = new Animator(1000, target);
+        Animator animator = new Animator(800, target);
         animator.setAcceleration(0.5f);
         animator.setDeceleration(0.5f);
         animator.setResolution(0);
@@ -83,6 +100,13 @@ public class Formulario extends javax.swing.JPanel {
         });
     }
 
+    public FormularioInfo getFormularioInfo() {
+        return formularioInfo;
+    }
+
+    public FormularioInfoProdutoCategoria getProdutoCategoria() {
+        return produtoCategoria;
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

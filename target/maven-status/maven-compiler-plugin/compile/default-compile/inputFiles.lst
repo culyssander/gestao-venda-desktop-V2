@@ -14,9 +14,9 @@ C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\Categoria.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\EstoqueHistorico.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\ListaMenu.java
-C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\formulario\FormularioProdutoRegistra.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\servico\LoginServico.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\servico\EntidadeServico.java
+C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\servico\CategoriaServico.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\Cliente.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\PanelBoard.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\formulario\FormularioCliente.java
@@ -50,6 +50,7 @@ C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\TabelaCabecalho.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\Permissao.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\tabela\modelo\EstoqueHistoricoModelo.java
+C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\BotaoContorno.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\evento\EventoMenuSelectionado.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\ImageAvatar.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\formulario\FormularioVenda.java

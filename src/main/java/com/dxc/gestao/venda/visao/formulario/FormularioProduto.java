@@ -10,7 +10,6 @@ import javax.swing.JButton;
 public class FormularioProduto extends javax.swing.JPanel {
     
     private final FormularioProdutoControlador formularioProdutoControlador;
-    private FormularioProdutoRegistra formularioProdutoRegistra;
     private Formulario formulario;
     private Dashboard dashboard;
     private int menuSelectionadoIndex = -1;
@@ -25,14 +24,15 @@ public class FormularioProduto extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBar(new BarraDeRolar());
         this.usuarioId = usuarioId;
         
-        formularioProdutoControlador = new FormularioProdutoControlador(this);
-        formularioProdutoRegistra = new FormularioProdutoRegistra();
         formulario = new Formulario();
+        formularioProdutoControlador = new FormularioProdutoControlador(this);
+
         this.cabecalho = cabecalho;
         this.dashboard = dashboard;
         
         evento();
         eventoDoTeclado();
+        
     }
 
     public Formulario getFormulario() {
@@ -41,10 +41,6 @@ public class FormularioProduto extends javax.swing.JPanel {
     
     public Dashboard getDashboard() {
         return dashboard;
-    }
-    
-    public FormularioProdutoRegistra getFormularioProdutoRegistra() {
-        return formularioProdutoRegistra;
     }
     
     public Cabecalho getCabecalho() {
