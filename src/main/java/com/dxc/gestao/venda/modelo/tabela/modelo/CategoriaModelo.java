@@ -33,6 +33,7 @@ public class CategoriaModelo extends AbstractTableModel {
             case 0 -> {return categoria.getId();}
             case 1 -> {return categoria.getNome();}
             case 2 -> {return categoria.getDescricao();} 
+            
         }
         return "";
     }

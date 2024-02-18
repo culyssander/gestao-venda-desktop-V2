@@ -5,6 +5,8 @@ import com.dxc.gestao.venda.modelo.entidade.Usuario;
 import com.dxc.gestao.venda.visao.componentes.Cabecalho;
 import com.dxc.gestao.venda.visao.componentes.Menu;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JComponent;
 
 public class Dashboard extends javax.swing.JFrame {
@@ -59,7 +61,7 @@ public class Dashboard extends javax.swing.JFrame {
         
 //        formularioProdutoRegistra = new FormularioProdutoRegistra();
         formularioEstoqueRegistra = new FormularioEstoqueRegistra();
-        formulario = new Formulario();
+        formulario = new Formulario(formularioProduto);
     }
 
     public Usuario getUsuario() {

@@ -22,10 +22,10 @@ public class CategoriaServico {
     
     public String salva(Categoria categoria) {
         Map<String, Object> map = new HashMap<>();
-        map.put("email", categoria.getNome());
-        
+        map.put("nome", categoria.getNome());
         if (categoria.getId() == null && categoriaRepositorio.existePeloAtributoEValor(map)) {
-            throw new RuntimeException("Ja existe essa categoria cadastrado");
+            return "Ja existe essa categoria cadastrado";
+//            throw new RuntimeException(mensagem);
         }
         
         try {
@@ -35,7 +35,8 @@ public class CategoriaServico {
                 return "Categoria salvando com sucesso!";
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return e.getMessage();
+//            throw new RuntimeException(e);
         }
         return "Erro ao salvar categoria";
     }
@@ -49,5 +50,15 @@ public class CategoriaServico {
         throw new RuntimeException("Categoria nao encontrado.");
     }
     
-    
+    public Categoria encontrarPeloNome(String nome) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("nome", nome);
+        
+        List<Categoria> categorias = categoriaRepositorio.encontrarPeloAtributoUsandoAND(map, false);
+        
+        if (!categorias.isEmpty()) 
+            return categorias.get(0);
+        
+        return null;
+    }
 }

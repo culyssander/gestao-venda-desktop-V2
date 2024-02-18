@@ -24,9 +24,9 @@ public class FormularioProduto extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBar(new BarraDeRolar());
         this.usuarioId = usuarioId;
         
-        formulario = new Formulario();
         formularioProdutoControlador = new FormularioProdutoControlador(this);
-
+        formulario = new Formulario(this);
+        
         this.cabecalho = cabecalho;
         this.dashboard = dashboard;
         

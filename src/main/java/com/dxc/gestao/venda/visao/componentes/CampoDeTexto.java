@@ -20,6 +20,7 @@ public class CampoDeTexto extends JTextField {
     private String dica;
     private Icon prefixoIcon;
     private Icon sufixoIcon;
+    private Color color;
 
     public CampoDeTexto() {
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -27,6 +28,7 @@ public class CampoDeTexto extends JTextField {
         setForeground(Color.decode("#1D1B86"));
         setFont(new Font("sansserif", 0, 13));
         setSelectionColor(new Color(75, 175, 152));
+        this.color = new Color(28, 181, 224, 80);
     }
     
     
@@ -34,7 +36,7 @@ public class CampoDeTexto extends JTextField {
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(new Color(28, 181, 224, 80));
+        g2.setColor(color);
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 5, 5);
         paintIcon(g);
         super.paintComponent(g);
@@ -93,4 +95,9 @@ public class CampoDeTexto extends JTextField {
     public void setDica(String dica) {
         this.dica = dica;
     }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+    
 }

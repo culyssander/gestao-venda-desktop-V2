@@ -1,5 +1,6 @@
 package com.dxc.gestao.venda.visao.formulario;
 
+import com.dxc.gestao.venda.controlador.FormularioProdutoControlador;
 import com.dxc.gestao.venda.visao.componentes.BarraDeRolar;
 import com.dxc.gestao.venda.visao.componentes.Botao;
 import com.dxc.gestao.venda.visao.componentes.CampoDeTexto;
@@ -16,6 +17,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class FormularioInfoProdutoCategoria extends javax.swing.JLayeredPane {
    
+    private final FormularioProdutoControlador formularioProdutoControlador;
     private CampoDeTexto textoNomeCategoria;
     private CampoDeTexto textoDescricaoCategoria;
     private JButton botaoResetCategoria;
@@ -28,13 +30,23 @@ public class FormularioInfoProdutoCategoria extends javax.swing.JLayeredPane {
     private Botao botaoProduto;
     
     
-    public FormularioInfoProdutoCategoria() {
+    public FormularioInfoProdutoCategoria(FormularioProduto formularioProduto) {
         initComponents();
+        formularioProdutoControlador = new FormularioProdutoControlador(formularioProduto);
         inicializacaoDoProduto();
         inicializacaoDaCategoria();
         
         categoria.setVisible(false);
         produto.setVisible(true);
+        tabela1.setModel(formularioProdutoControlador.getCategoriaModelo());
+        
+        formularioProdutoControlador.getCategoriaModelo()
+                .getCategorias()
+                .forEach(c -> {
+                    comboBoxCategoriaProduto.addItem(c.getNome());
+                });
+        
+        tabela1.addMouseListener(formularioProdutoControlador);
     }
     
     private void inicializacaoDoProduto() {
@@ -70,6 +82,8 @@ public class FormularioInfoProdutoCategoria extends javax.swing.JLayeredPane {
         botaoProduto.setForeground(Color.WHITE);
         botaoProduto.setFont(new Font("sansserif", 5, 14));
         botaoProduto.setText("Salvar");
+        botaoProduto.setActionCommand("salvarProduto");
+        botaoProduto.addKeyListener(formularioProdutoControlador);
         produto.add(botaoProduto, "w 40%, h 40");
     }
     
@@ -104,6 +118,9 @@ public class FormularioInfoProdutoCategoria extends javax.swing.JLayeredPane {
         botaoCategoria.setForeground(Color.WHITE);
         botaoCategoria.setFont(new Font("sansserif", 5, 14));
         botaoCategoria.setText("Salvar");
+        botaoCategoria.setActionCommand("salvarCategoria");
+        botaoCategoria.addKeyListener(formularioProdutoControlador);
+        botaoResetCategoria.addKeyListener(formularioProdutoControlador);
         categoria.add(botaoCategoria, "w 40%, h 40");
         
         jScrollPane1.getViewport().setBackground(Color.WHITE);

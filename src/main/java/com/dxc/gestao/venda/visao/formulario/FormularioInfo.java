@@ -2,12 +2,15 @@ package com.dxc.gestao.venda.visao.formulario;
 
 import com.dxc.gestao.venda.visao.componentes.BotaoContorno;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -17,6 +20,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class FormularioInfo extends javax.swing.JPanel {
     
+//    private FormularioProduto formularioProduto;
     private final DecimalFormat decimalFormat = new DecimalFormat("##0.###", DecimalFormatSymbols.getInstance(Locale.US));
     private ActionListener actionListener;
     private final MigLayout layout;
@@ -27,7 +31,7 @@ public class FormularioInfo extends javax.swing.JPanel {
     private final JLabel volta;
     private boolean estaCategoria;
 
-    public FormularioInfo() {
+    public FormularioInfo(FormularioProduto formularioProduto) {
         initComponents();
         setOpaque(false);
         volta = new JLabel();
@@ -35,6 +39,14 @@ public class FormularioInfo extends javax.swing.JPanel {
         this.layout = new MigLayout("wrap, fill", "[center]", "push[]25[]10[]25[]push");
         setLayout(layout);
         inicializacao();
+        
+        volta.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                formularioProduto.getDashboard().setForm(formularioProduto);
+            }
+            
+        });
     }
     
     private void inicializacao() {
@@ -123,9 +135,11 @@ public class FormularioInfo extends javax.swing.JPanel {
             this.estaCategoria = categoria;
         }
     }
+
+    public JLabel getVolta() {
+        return volta;
+    }
     
-
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

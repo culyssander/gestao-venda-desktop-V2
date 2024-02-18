@@ -1,3 +1,4 @@
+com\dxc\gestao\venda\visao\formulario\FormularioInfo$2.class
 com\dxc\gestao\venda\modelo\dto\HistoricoEstoqueDto.class
 com\dxc\gestao\venda\visao\componentes\ListaMenu.class
 com\dxc\gestao\venda\visao\componentes\ModernScrollBarUI.class
@@ -5,6 +6,7 @@ com\dxc\gestao\venda\modelo\servico\ProdutoServico$2.class
 com\dxc\gestao\venda\modelo\entidade\Perfil.class
 com\dxc\gestao\venda\visao\formulario\Login$3.class
 com\dxc\gestao\venda\controlador\FormularioPrincipalControlador$3.class
+com\dxc\gestao\venda\visao\formulario\Formulario$2.class
 com\dxc\gestao\venda\modelo\servico\CategoriaServico$1.class
 com\dxc\gestao\venda\visao\formulario\FormularioUsuario$11.class
 com\dxc\gestao\venda\visao\formulario\FormularioVenda$1.class
@@ -40,6 +42,7 @@ com\dxc\gestao\venda\modelo\tabela\modelo\ProdutoModelo.class
 com\dxc\gestao\venda\visao\componentes\Tabela$2.class
 com\dxc\gestao\venda\visao\formulario\FormularioUsuario$4.class
 com\dxc\gestao\venda\visao\formulario\FormularioPrincipal$4.class
+com\dxc\gestao\venda\visao\formulario\Login$8.class
 com\dxc\gestao\venda\modelo\servico\LoginServico$1.class
 com\dxc\gestao\venda\modelo\servico\EstoqueHistoricoServico$2.class
 com\dxc\gestao\venda\visao\formulario\Login$2.class
@@ -47,6 +50,7 @@ com\dxc\gestao\venda\controlador\FormularioEstoqueControlador.class
 com\dxc\gestao\venda\modelo\entidade\Produto.class
 com\dxc\gestao\venda\visao\formulario\FormularioUsuario$3.class
 com\dxc\gestao\venda\visao\formulario\FormularioPrincipal$3.class
+com\dxc\gestao\venda\visao\componentes\Mensagem$TipoDeMensagem.class
 com\dxc\gestao\venda\visao\componentes\Tabela$1.class
 com\dxc\gestao\venda\modelo\servico\PermissaoServico.class
 com\dxc\gestao\venda\modelo\entidade\Permissao.class
@@ -97,10 +101,12 @@ com\dxc\gestao\venda\visao\componentes\Botao.class
 com\dxc\gestao\venda\visao\formulario\Formulario$1.class
 com\dxc\gestao\venda\modelo\entidade\EstoqueTipo.class
 com\dxc\gestao\venda\visao\formulario\FormularioPrincipal$2.class
+com\dxc\gestao\venda\modelo\entidade\Categoria$CategoriaBuilder.class
 com\dxc\gestao\venda\modelo\servico\EntidadeServico$1.class
 com\dxc\gestao\venda\visao\formulario\FormularioPrincipal$5.class
 com\dxc\gestao\venda\visao\formulario\FormularioUsuario$10.class
 com\dxc\gestao\venda\controlador\FormularioProdutoControlador.class
+com\dxc\gestao\venda\modelo\entidade\Produto$ProdutoBuilder.class
 com\dxc\gestao\venda\visao\formulario\Login$5.class
 com\dxc\gestao\venda\modelo\tabela\modelo\EstoqueHistoricoModelo.class
 com\dxc\gestao\venda\visao\formulario\FormularioUsuario$7.class
@@ -126,6 +132,7 @@ com\dxc\gestao\venda\visao\formulario\FormularioUsuario$1.class
 com\dxc\gestao\venda\visao\formulario\FormularioEstoqueRegistra.class
 com\dxc\gestao\venda\modelo\servico\UsuarioServico.class
 com\dxc\gestao\venda\visao\formulario\FormularioEstoque$2.class
+com\dxc\gestao\venda\visao\componentes\Mensagem.class
 com\dxc\gestao\venda\visao\formulario\Login$4.class
 com\dxc\gestao\venda\visao\componentes\ListaMenu$3.class
 com\dxc\gestao\venda\visao\formulario\FormularioInfo$1.class
@@ -134,6 +141,7 @@ com\dxc\gestao\venda\visao\componentes\BarraDeRolar.class
 com\dxc\gestao\venda\visao\formulario\FormularioVenda$3.class
 com\dxc\gestao\venda\controlador\DashboardControlador.class
 com\dxc\gestao\venda\modelo\servico\EstoqueHistoricoServico.class
+com\dxc\gestao\venda\visao\componentes\PanelLoading.class
 com\dxc\gestao\venda\modelo\dto\ProdutoDto$ProdutoDtoBuilder.class
 com\dxc\gestao\venda\visao\componentes\MenuItem$1.class
 com\dxc\gestao\venda\modelo\entidade\EstoqueHistorico.class

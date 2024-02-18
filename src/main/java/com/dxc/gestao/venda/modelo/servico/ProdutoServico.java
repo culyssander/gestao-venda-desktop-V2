@@ -5,7 +5,9 @@ import com.dxc.gestao.venda.modelo.entidade.Categoria;
 import com.dxc.gestao.venda.modelo.entidade.Produto;
 import com.dxc.gestao.venda.modelo.repositorio.CrudRepositorio;
 import com.dxc.gestao.venda.modelo.repositorio.impl.CrudRepositorioImpl;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -39,5 +41,24 @@ public class ProdutoServico {
              }).collect(Collectors.toList());
     }
     
+    public String salva(Produto produto) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("nome", produto.getNome());
+        
+        if (produto.getId() == null && produtoRepositorio.existePeloAtributoEValor(map)) {
+            return "Produto ja encontra-se cadastrado...";
+        }
+        
+        try {
+            boolean resultado = produtoRepositorio.salvar(produto);
+            
+            if (resultado) 
+                return "Produto cadastrado com sucesso";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        
+        return "erro ao cadastrar o produto";
+    }
     
 }
