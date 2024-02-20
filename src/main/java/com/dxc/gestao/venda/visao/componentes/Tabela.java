@@ -2,7 +2,12 @@ package com.dxc.gestao.venda.visao.componentes;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Label;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -30,12 +35,20 @@ public class Tabela extends JTable {
                 if (value != null) {
                    if (value.toString().equals("ENTRADA")) {
                     var label = new JLabel();
-                    label.setOpaque(true);
+                    label.setOpaque(false);
                     label.setText(String.valueOf(value));
-                    label.setBackground(new Color(147, 249, 185));
-                    label.setForeground(Color.WHITE);
+                    label.setFont(new Font("sansserif", 5, 13));
+                    label.setForeground(new Color(147, 249, 185));
                     return label;
                   }
+                  
+                   if (value.toString().equals("REMOVER")) {
+                       BotaoContorno botao = new BotaoContorno();
+                       botao.setText("Remover");
+                       botao.setForeground(new Color(204,0,0));
+                       botao.setBackground(new Color(204,0,0));
+                       return botao;
+                   }
                 }
                 
 //                if(column != 3) {

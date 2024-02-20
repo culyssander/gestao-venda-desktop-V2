@@ -29,13 +29,13 @@ public class ProdutoServico {
         
         return lista.stream()
              .map(p -> {
-                    Optional<Categoria> categoria = categoriaRepositorio.encontrarPeloId(p.getId());
+                    Optional<Categoria> categoria = categoriaRepositorio.encontrarPeloId(p.getCategoriaId());
                     return ProdutoDto.builder()
-                            .categoria(categoria.get())
                             .id(p.getId())
                             .nome(p.getNome())
                             .descricao(p.getDescricao())
                             .preco(p.getPreco())
+                            .categoria(categoria.get())
                             .dataCriacao(p.getDataCriacao())
                             .build();
              }).collect(Collectors.toList());
@@ -51,14 +51,27 @@ public class ProdutoServico {
         
         try {
             boolean resultado = produtoRepositorio.salvar(produto);
-            
+            System.out.println("RESULTADO: " + resultado);
             if (resultado) 
                 return "Produto cadastrado com sucesso";
         } catch (Exception e) {
+            System.out.println("error: " + e);
             return e.getMessage();
         }
         
         return "erro ao cadastrar o produto";
+    }
+    
+    public String remover(Long id) {
+        try {
+            boolean resultado = produtoRepositorio.removerPeloId(id);
+            
+            if (resultado) 
+                return "Produto removido com sucesso!";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        return "Erro ao remover o produto";
     }
     
 }

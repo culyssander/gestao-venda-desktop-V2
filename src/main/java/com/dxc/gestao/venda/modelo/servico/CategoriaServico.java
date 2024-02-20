@@ -35,6 +35,7 @@ public class CategoriaServico {
                 return "Categoria salvando com sucesso!";
             }
         } catch (Exception e) {
+            System.out.println(e);
             return e.getMessage();
 //            throw new RuntimeException(e);
         }
@@ -60,5 +61,22 @@ public class CategoriaServico {
             return categorias.get(0);
         
         return null;
+    }
+    
+    public String removerPeloId(Long id) {
+        try {
+            boolean resultado = categoriaRepositorio.removerPeloId(id);
+            
+            if (resultado) {
+                return "Categoria removido com sucesso!";
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            if (e.getMessage().contains("a foreign key")) {
+                return "Categoria esta em uso";
+            }
+            return e.getMessage();
+        }
+        return "Erro ao remover a categoria";
     }
 }

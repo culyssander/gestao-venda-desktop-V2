@@ -43,7 +43,7 @@ public class LoginControlador implements ActionListener{
             new Thread(
                     () -> {
                         try {
-                            Thread.sleep(3000);
+                            Thread.sleep(2000);
                             login.setVisible(false);
                             limpaTela();
                             new Dashboard(loginResponse.getUsuario()).setVisible(true);

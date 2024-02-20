@@ -43,19 +43,20 @@ public abstract class CrudRepositorioImpl<T extends Object> implements CrudRepos
             
             List<T> list = new ArrayList<>();
             list.add(t);
-            return id == null ? persiste(list, formaSQL(t, "INSERT INTO %s (%s) VALUES(%s)", id)) 
-                              : persiste(list, formaSQL(t, "UPDATE %s SET %s WHERE id=?", id));
+            return id == null ? persiste(list, formaSQL(t, "INSERT INTO %s (%s) VALUES(%s)", id), false) 
+                              : persiste(list, formaSQL(t, "UPDATE %s SET %s WHERE id=?", id), true);
         } catch (IllegalAccessException | IllegalArgumentException e) {
             System.out.println(e);
             throw new RuntimeException(e);
         }
     }
     
-    private boolean persiste(List<T> t, String SQL) {       
+    private boolean persiste(List<T> t, String SQL, boolean atualiza) {       
         try {
+            System.out.println("SQL: " + SQL);
             PreparedStatement preparedStatement = this.conexao.obterConexao()
                                                       .prepareStatement(SQL);
-            preencherPreparedStatement(t, preparedStatement);
+            preencherPreparedStatement(t, preparedStatement, atualiza);
             int resultado = preparedStatement.executeUpdate();
             
             if (resultado == 0)
@@ -68,15 +69,20 @@ public abstract class CrudRepositorioImpl<T extends Object> implements CrudRepos
         }
     }
 
-    private void preencherPreparedStatement(List<T> list, PreparedStatement ps) {
+    private void preencherPreparedStatement(List<T> list, PreparedStatement ps, boolean atualiza) {
         int count = 1;
 
         for (T t : list) {
-            Set<Field> fields = ReflectionUtils.getAllFields(this.t, e -> true);
-
+            Set<Field> fields = ReflectionUtils.getAllFields(t.getClass(), e -> true);
             for (Field field : fields) {
                 field.setAccessible(true);
                 try {
+                    
+                    if (atualiza && field.getName().equals("id")) {
+                        ps.setObject(fields.size(), field.get(t));
+                        continue;
+                    }
+                    
                     ps.setObject(count, field.get(t));
                     count++;
                 } catch (Exception e) {
@@ -330,7 +336,7 @@ public abstract class CrudRepositorioImpl<T extends Object> implements CrudRepos
     @Override
     public boolean salvarTodos(List<T> list) {
         String SQL = formaSQLTodos(list.size(), "INSERT INTO %s (%s) VALUES %s");
-        return persiste(list, SQL);
+        return persiste(list, SQL, false);
     }
  
     private String formaSQLTodos(int tamanho, String SQL) {

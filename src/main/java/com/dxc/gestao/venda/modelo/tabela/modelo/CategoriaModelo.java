@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 public class CategoriaModelo extends AbstractTableModel {
     
     private List<Categoria> categorias;
-    private final String [] colunas = {"ID", "Nome", "Descrição"};
+    private final String [] colunas = {"ID", "Nome", "Descrição", ""};
     
     public CategoriaModelo(List<Categoria> categorias) {
         this.categorias = categorias;
@@ -33,7 +33,7 @@ public class CategoriaModelo extends AbstractTableModel {
             case 0 -> {return categoria.getId();}
             case 1 -> {return categoria.getNome();}
             case 2 -> {return categoria.getDescricao();} 
-            
+            case 3 -> {return "REMOVER";}
         }
         return "";
     }

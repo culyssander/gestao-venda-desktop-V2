@@ -16,7 +16,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class FormularioProdutoControlador implements ActionListener, KeyListener, MouseListener {
     
@@ -25,10 +27,10 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
     private final CategoriaServico categoriaServico;
     private ProdutoModelo produtoModelo;
     private CategoriaModelo categoriaModelo;
-    private List<ProdutoDto> produtos;
-    private List<Categoria> categorias;
-    
-    private Long categoriaId;
+    private static List<ProdutoDto> produtos;
+    private static List<Categoria> categorias;
+    private static Long categoriaId;
+    private static Long produtoId;
     
 
     public FormularioProdutoControlador(FormularioProduto formularioProduto) {
@@ -47,7 +49,8 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
     }
     
     private void atualizaTabelaCategoria() {
-        categorias = categoriaServico.encontrarTodos();
+        this.categorias = categoriaServico.encontrarTodos();
+        
         categoriaModelo = new CategoriaModelo(categorias);
         formularioProduto.getFormulario().getProdutoCategoria().getTabelaCategoria().setModel(categoriaModelo);
         
@@ -70,22 +73,52 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
     }
     
     private void validaCampo(String texto) {
+        System.out.println("VALIDACAO: " + texto + " - " + texto.isBlank());
         if (texto.isBlank()){
             String mensagem = "Todos os campos sao obrigatorio.";
             formularioProduto.getFormulario().mostrMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
-            throw new RuntimeException(mensagem);
+//            throw new RuntimeException(mensagem);
+            return;
         }
     }
     
-    private void selecionaTabelaCategoria() {
+    private Categoria selecionaTabelaCategoria() {
         int index = formularioProduto.getFormulario().getProdutoCategoria().getTabelaCategoria().getSelectedRow();
         System.out.println("INDEX: " + index);
         if (index != -1) {
             Categoria categoria = categorias.get(index);
-            System.out.println(categoria);
             categoriaId = categoria.getId();
+            return categoria;
+        }
+        return null;
+    }
+    
+    private void preencherOsCamposCategoria() {
+        Categoria categoria = selecionaTabelaCategoria();
+        
+        if (categoria != null) {
             formularioProduto.getFormulario().getProdutoCategoria().getTextoNomeCategoria().setText(categoria.getNome());
             formularioProduto.getFormulario().getProdutoCategoria().getTextoDescricaoCategoria().setText(categoria.getDescricao());
+        }
+        
+    }
+    
+    private void removeCategoria() {
+        Categoria categoria = selecionaTabelaCategoria();
+        int confirma = JOptionPane.showConfirmDialog(null, "Tens certeza?\n" +
+                "Categoria: " + categoria.getNome()
+                , "Remove categoria", JOptionPane.ERROR_MESSAGE);
+
+        if (confirma == JOptionPane.YES_NO_OPTION) {
+            String mensagem = categoriaServico.removerPeloId(categoria.getId());
+
+            if (mensagem.startsWith("Categoria removido")) {
+                formularioProduto.getFormulario().mostrMensagem(Mensagem.TipoDeMensagem.SUCESSO, mensagem);
+                limpaCampoCategoria();
+                atualizaTabelaCategoria();
+            } else {
+                formularioProduto.getFormulario().mostrMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
+            }
         }
     }
     
@@ -101,12 +134,16 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
                     .nome(nomeCategoria)
                     .descricao(descricaoCategoria)
                     .build();
-
+            
             String mensagem = categoriaServico.salva(categoria);
-            formularioProduto.getFormulario().mostrMensagem(Mensagem.TipoDeMensagem.SUCESSO, mensagem);
-
-            atualizaTabelaCategoria();
-            limpaCampoCategoria();
+            
+            if (mensagem.startsWith("Categoria salvando")) {
+                formularioProduto.getFormulario().mostrMensagem(Mensagem.TipoDeMensagem.SUCESSO, mensagem);
+                limpaCampoCategoria();
+                atualizaTabelaCategoria();
+            } else {
+                formularioProduto.getFormulario().mostrMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
+            }         
         });
     }
     
@@ -115,7 +152,7 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
         formularioProduto.getFormulario().getProdutoCategoria().getTextoNomeCategoria().setText("");
         formularioProduto.getFormulario().getProdutoCategoria().getTextoDescricaoCategoria().setText("");
     }
-    
+    private static int conta = 0;
     private void salvaProduto() {
         formularioProduto.getFormulario().getProdutoCategoria().getBotaoProduto().addActionListener(e -> {
             String nome = formularioProduto.getFormulario().getProdutoCategoria().getTextoNomeProduto().getText().trim();
@@ -137,23 +174,26 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
             }
             
             Produto produto = Produto.builder()
+                    .id(produtoId)
                     .nome(nome)
                     .descricao(descricao)
                     .preco(preco)
                     .categoriaId(categoria.getId())
                     .usuarioId(formularioProduto.getUsuarioId())
+                    .dataCriacao(LocalDateTime.now())
                     .build();
             
             String mensagem = produtoServico.salva(produto);
-            
             if (mensagem.startsWith("Produto cadastrado")) {
                   formularioProduto.getFormulario().mostrMensagem(Mensagem.TipoDeMensagem.SUCESSO, mensagem);
                   limpaCampoProduto();
                   atualizaTabela();
+//                  formularioProduto.getDashboard().
             } else {
                   formularioProduto.getFormulario().mostrMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
             }
-            
+            conta++;
+            System.out.println(conta);
         });
     }
     
@@ -168,7 +208,8 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
         if (formularioProduto.getFormulario().getProdutoCategoria().getComboBoxCategoriaProduto().getSelectedIndex() < 1) {
             String mensagem = "Categoria é um campo obrigatorio...";
             formularioProduto.getFormulario().mostrMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
-            throw new RuntimeException(mensagem);
+//            throw new RuntimeException(mensagem);
+            return;
         }
     }
        
@@ -198,8 +239,8 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
         
         switch(action) {
             case "adicionar" -> {adicionar();}
-            case "atualizar" -> {}
-            case "remover" -> {}
+            case "atualizar" -> {alterarProduto();}
+            case "remover" -> {remover();}
             case "imprimir" -> {}
         }
         
@@ -227,7 +268,13 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
 
     @Override
     public void mousePressed(MouseEvent e) {
-        selecionaTabelaCategoria();
+        int colum = formularioProduto.getFormulario().getProdutoCategoria().getTabelaCategoria().getSelectedColumn();
+        
+        if (colum == 3) {
+            removeCategoria();
+        } else {
+            preencherOsCamposCategoria();
+        }
     }
 
     @Override
@@ -241,5 +288,51 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
     @Override
     public void mouseExited(MouseEvent e) {
     }
+
+    private void remover() {
+        ProdutoDto produtoDto = selecionaProdutoNaTabela();
+        
+        int confirma = JOptionPane.showConfirmDialog(null, "Tens certeza?\n" +
+                 "\nNome: " + produtoDto.getNome() +
+                 "\nPreço: " + produtoDto.getPreco() +
+                 "\nCategoria: " + produtoDto.getCategoria().getNome(), 
+                "Remover Produto", JOptionPane.ERROR_MESSAGE);
+        
+        if (confirma == JOptionPane.YES_OPTION) {
+            String mensagem = produtoServico.remover(produtoDto.getId());
+            
+            if (mensagem.startsWith("Produto removido")) {
+                JOptionPane.showMessageDialog(null, mensagem);
+                atualizaTabela();
+            } else {
+                JOptionPane.showMessageDialog(formularioProduto, mensagem, "Remover Produto", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+ 
+    private ProdutoDto selecionaProdutoNaTabela() {
+        int index = formularioProduto.getTabelaProduto().getSelectedRow();
+        
+        if(index != -1) {
+            return produtos.get(index);
+        }
+        String mensagem = "Tens que seleciona um produto";
+        JOptionPane.showMessageDialog(null, mensagem);
+        
+        throw new RuntimeException(mensagem);
+    }
+
+    private void alterarProduto() {
+        ProdutoDto produtoDto = selecionaProdutoNaTabela();
+        preencherCamposDoProduto(produtoDto);
+        formularioProduto.getDashboard().setForm(formularioProduto.getFormulario());
+    }
     
+    private void preencherCamposDoProduto(ProdutoDto produtoDto) {
+        produtoId = produtoDto.getId();
+        formularioProduto.getFormulario().getProdutoCategoria().getTextoNomeProduto().setText(produtoDto.getNome());
+        formularioProduto.getFormulario().getProdutoCategoria().getTextoDescricaoProduto().setText(produtoDto.getDescricao());
+        formularioProduto.getFormulario().getProdutoCategoria().getTextoPrecoProduto().setText(produtoDto.getPreco().toString());
+        formularioProduto.getFormulario().getProdutoCategoria().getComboBoxCategoriaProduto().setSelectedItem(produtoDto.getCategoria().getNome());
+    }
 }
