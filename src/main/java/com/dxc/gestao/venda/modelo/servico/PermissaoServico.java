@@ -83,9 +83,6 @@ public class PermissaoServico {
         map.put("usuarioId", usuarioId);
         map.put("permissaoId", permissaoId);
         
-        System.out.println(map);
-        System.out.println(repositorioPermissaoUsuario.existePeloAtributoEValor(map));
-        
         if (!repositorioPermissaoUsuario.existePeloAtributoEValor(map)) {
             String mensagem = "Sem permissão";
             JOptionPane.showMessageDialog(null, mensagem, "Sem permissão", JOptionPane.ERROR_MESSAGE);

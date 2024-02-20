@@ -4,6 +4,7 @@ import com.dxc.gestao.venda.modelo.dto.ProdutoDto;
 import com.dxc.gestao.venda.modelo.entidade.Categoria;
 import com.dxc.gestao.venda.modelo.entidade.Produto;
 import com.dxc.gestao.venda.modelo.servico.CategoriaServico;
+import com.dxc.gestao.venda.modelo.servico.PermissaoServico;
 import com.dxc.gestao.venda.modelo.servico.ProdutoServico;
 import com.dxc.gestao.venda.modelo.tabela.modelo.CategoriaModelo;
 import com.dxc.gestao.venda.modelo.tabela.modelo.ProdutoModelo;
@@ -25,18 +26,23 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
     private final FormularioProduto formularioProduto;
     private final ProdutoServico produtoServico;
     private final CategoriaServico categoriaServico;
+    private final PermissaoServico permissaoServico;
     private ProdutoModelo produtoModelo;
     private CategoriaModelo categoriaModelo;
     private static List<ProdutoDto> produtos;
     private static List<Categoria> categorias;
     private static Long categoriaId;
     private static Long produtoId;
+    private final long PERMISSAO_ID_PARA_SALVAR_PRODUTO = 7;
+    private final long PERMISSAO_ID_PARA_REMOVER_PRODUTO = 8;
+    private final long PERMISSAO_ID_PARA_SALVAR_CATEGORIA = 11;
+    private final long PERMISSAO_ID_PARA_REMOVER_CATEGORIA = 12;
     
-
     public FormularioProdutoControlador(FormularioProduto formularioProduto) {
         this.formularioProduto = formularioProduto;
         produtoServico = new ProdutoServico();
         categoriaServico = new CategoriaServico();
+        permissaoServico = new PermissaoServico();
         categorias = categoriaServico.encontrarTodos();
         categoriaModelo = new CategoriaModelo(categorias);
         atualizaTabela();
@@ -104,6 +110,7 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
     }
     
     private void removeCategoria() {
+        permissaoServico.validaPermissao(formularioProduto.getDashboard().getUsuario().getId(), PERMISSAO_ID_PARA_REMOVER_CATEGORIA);
         Categoria categoria = selecionaTabelaCategoria();
         int confirma = JOptionPane.showConfirmDialog(null, "Tens certeza?\n" +
                 "Categoria: " + categoria.getNome()
@@ -124,6 +131,7 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
     
     private void salvaCategoria() {
         formularioProduto.getFormulario().getProdutoCategoria().getBotaoCategoria().addActionListener(e -> {
+            permissaoServico.validaPermissao(formularioProduto.getDashboard().getUsuario().getId(), PERMISSAO_ID_PARA_SALVAR_CATEGORIA);
             String nomeCategoria = formularioProduto.getFormulario().getProdutoCategoria().getTextoNomeCategoria().getText().trim();
             String descricaoCategoria = formularioProduto.getFormulario().getProdutoCategoria().getTextoDescricaoCategoria().getText().trim();
 
@@ -152,9 +160,9 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
         formularioProduto.getFormulario().getProdutoCategoria().getTextoNomeCategoria().setText("");
         formularioProduto.getFormulario().getProdutoCategoria().getTextoDescricaoCategoria().setText("");
     }
-    private static int conta = 0;
     private void salvaProduto() {
         formularioProduto.getFormulario().getProdutoCategoria().getBotaoProduto().addActionListener(e -> {
+            permissaoServico.validaPermissao(formularioProduto.getDashboard().getUsuario().getId(), PERMISSAO_ID_PARA_SALVAR_PRODUTO);
             String nome = formularioProduto.getFormulario().getProdutoCategoria().getTextoNomeProduto().getText().trim();
             String descricao = formularioProduto.getFormulario().getProdutoCategoria().getTextoDescricaoProduto().getText().trim();
             String precoString = formularioProduto.getFormulario().getProdutoCategoria().getTextoPrecoProduto().getText().trim();
@@ -188,16 +196,15 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
                   formularioProduto.getFormulario().mostrMensagem(Mensagem.TipoDeMensagem.SUCESSO, mensagem);
                   limpaCampoProduto();
                   atualizaTabela();
-//                  formularioProduto.getDashboard().
+                  formularioProduto.getDashboard().getFormularioPrincipal().setTotalProduto("Total " + produtos.size());
             } else {
                   formularioProduto.getFormulario().mostrMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
             }
-            conta++;
-            System.out.println(conta);
         });
     }
     
     private void limpaCampoProduto() {
+        produtoId = null;
         formularioProduto.getFormulario().getProdutoCategoria().getTextoNomeProduto().setText("");
         formularioProduto.getFormulario().getProdutoCategoria().getTextoDescricaoProduto().setText("");
         formularioProduto.getFormulario().getProdutoCategoria().getTextoPrecoProduto().setText("");
@@ -256,10 +263,28 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
     public void keyPressed(KeyEvent e) {}
 
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+        
+        if (formularioProduto.getMenuSelectionadoIndex() == 1) {
+            String texto = formularioProduto.getCabecalho().getPesquisar().getText().trim();
+            encontraProdutoPeloAtributo(texto);
+        }
+    
+    }
+    
+    private void encontraProdutoPeloAtributo(String texto) {
+        if (texto.isBlank()) {
+            atualizaTabela();
+        } else {
+            produtos = produtoServico.encontrarPeloAtributo(texto);
+            produtoModelo = new ProdutoModelo(produtos);
+            formularioProduto.getTabelaProduto().setModel(produtoModelo);
+        }
+    }
 
     private void adicionar() {
         formularioProduto.getDashboard().setForm(formularioProduto.getFormulario());
+        limpaCampoProduto();
     }
 
     @Override
@@ -290,6 +315,7 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
     }
 
     private void remover() {
+        permissaoServico.validaPermissao(formularioProduto.getDashboard().getUsuario().getId(), PERMISSAO_ID_PARA_REMOVER_PRODUTO);
         ProdutoDto produtoDto = selecionaProdutoNaTabela();
         
         int confirma = JOptionPane.showConfirmDialog(null, "Tens certeza?\n" +
@@ -304,6 +330,7 @@ public class FormularioProdutoControlador implements ActionListener, KeyListener
             if (mensagem.startsWith("Produto removido")) {
                 JOptionPane.showMessageDialog(null, mensagem);
                 atualizaTabela();
+                formularioProduto.getDashboard().getFormularioPrincipal().setTotalProduto("Total " + produtos.size());
             } else {
                 JOptionPane.showMessageDialog(formularioProduto, mensagem, "Remover Produto", JOptionPane.ERROR_MESSAGE);
             }

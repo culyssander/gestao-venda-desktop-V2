@@ -5,13 +5,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.List;
 
 public class FormularioEstoqueControlador implements ActionListener, KeyListener{
     
     private FormularioEstoque formularioEstoque;
+    
 
     public FormularioEstoqueControlador(FormularioEstoque formularioEstoque) {
         this.formularioEstoque = formularioEstoque;
+        
+    }
+    
+    private void atualizaTabela() {
+        
+        
     }
 
     @Override

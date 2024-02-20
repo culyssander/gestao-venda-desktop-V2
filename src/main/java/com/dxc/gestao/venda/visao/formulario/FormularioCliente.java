@@ -1,12 +1,18 @@
 package com.dxc.gestao.venda.visao.formulario;
 
 import com.dxc.gestao.venda.controlador.FormularioClienteControlador;
-import com.dxc.gestao.venda.controlador.FormularioProdutoControlador;
 import com.dxc.gestao.venda.visao.componentes.BarraDeRolar;
 import com.dxc.gestao.venda.visao.componentes.Cabecalho;
+import com.dxc.gestao.venda.visao.componentes.CampoDeTexto;
+import com.dxc.gestao.venda.visao.componentes.Mensagem;
 import com.dxc.gestao.venda.visao.componentes.Tabela;
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import net.miginfocom.swing.MigLayout;
+import org.jdesktop.animation.timing.Animator;
+import org.jdesktop.animation.timing.TimingTarget;
+import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class FormularioCliente extends javax.swing.JPanel {
     
@@ -14,6 +20,7 @@ public class FormularioCliente extends javax.swing.JPanel {
     private int menuSelectionadoIndex = -1;
     private Cabecalho cabecalho;
     private Long usuarioId;
+    private MigLayout layout;
 
     public FormularioCliente(Long usuarioId, Cabecalho cabecalho) {
         initComponents();
@@ -25,6 +32,9 @@ public class FormularioCliente extends javax.swing.JPanel {
         
         formularioClienteControlador = new FormularioClienteControlador(this);
         this.cabecalho = cabecalho;
+        this.layout = new MigLayout("fill, insets");
+        background.setLayout(layout);
+        background.add(panelBoard2);
         evento();
         eventoDoTeclado();
     }
@@ -49,8 +59,8 @@ public class FormularioCliente extends javax.swing.JPanel {
         botaoAdicionar.addActionListener(formularioClienteControlador);
         botaoAtualizar.addActionListener(formularioClienteControlador);
         botaoImprimir.addActionListener(formularioClienteControlador);
-        botaoPermissao.addActionListener(formularioClienteControlador);
         botaoRemover.addActionListener(formularioClienteControlador);
+        botaoSalvar.addActionListener(formularioClienteControlador);
     }
 
     public Long getUsuarioId() {
@@ -61,8 +71,8 @@ public class FormularioCliente extends javax.swing.JPanel {
         this.usuarioId = usuarioId;
     }
 
-    public Tabela getTabelaUsuario() {
-        return tabelaUsuario;
+    public Tabela getTabelaCliente() {
+        return tabelaCliente;
     }
 
     public JButton getBotaoAdicionar() {
@@ -77,28 +87,187 @@ public class FormularioCliente extends javax.swing.JPanel {
         return botaoImprimir;
     }
 
-    public JButton getBotaoPermissao() {
-        return botaoPermissao;
+    public JDialog getDialogCadastro() {
+        return dialogCadastro;
     }
 
     public JButton getBotaoRemover() {
         return botaoRemover;
+    }
+
+    public CampoDeTexto getCampoDeTextoNome() {
+        return campoDeTextoNome;
+    }
+
+    public CampoDeTexto getCampoDeTextoTelefone() {
+        return campoDeTextoTelefone;
+    }
+
+    public CampoDeTexto getCampoDeTextoMorada() {
+        return campoDeTextoMorada;
+    }
+    
+    public void mostrMensagem(Mensagem.TipoDeMensagem tipoDeMensagem, String mensagem) {
+        Mensagem ms = new Mensagem();
+        ms.mostrarMensagem(tipoDeMensagem, mensagem);
+        
+        TimingTarget target = new TimingTargetAdapter() {
+            @Override
+            public void begin() {
+                if (!ms.isMostrarMensagem()) {
+                    background.add(ms, "pos 0.5al 20", 0); // adicionar no primeiro indice
+                    ms.setVisible(true);
+                    background.repaint();
+                }
+            }
+
+            @Override
+            public void timingEvent(float fraction) {
+                float f;
+                
+                if (ms.isMostrarMensagem()) {
+                    f = 20 * (1f - fraction);
+                } else {
+                    f = 20 * fraction;
+                }
+
+                layout.setComponentConstraints(ms, "pos 0.5al " + (int) (f - 20));
+                background.repaint();
+                background.revalidate();
+            }
+
+            @Override
+            public void end() {
+                if (ms.isMostrarMensagem()) {
+                    background.remove(ms);
+                    background.repaint();
+                    background.revalidate();
+                } else {
+                    ms.setMostrarMensagem(true);
+                }
+            }
+        };
+        
+        Animator animator = new Animator(300, target);
+        animator.setResolution(0);
+        animator.setAcceleration(0.5f);
+        animator.setDeceleration(0.5f);
+        animator.start();
+        
+        new Thread(
+                () ->{
+                    try {
+                        Thread.sleep(2000);
+                        animator.start();
+                    } catch (InterruptedException e) {
+                        System.out.println(e);
+                    }
+                }).start();
     }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialogCadastro = new javax.swing.JDialog();
+        background = new javax.swing.JLayeredPane();
+        panelBoard2 = new com.dxc.gestao.venda.visao.componentes.PanelBoard();
+        labelTitulo = new javax.swing.JLabel();
+        campoDeTextoNome = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
+        campoDeTextoTelefone = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
+        campoDeTextoMorada = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
+        botaoSalvar = new com.dxc.gestao.venda.visao.componentes.Botao();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         botaoAdicionar = new javax.swing.JButton();
         botaoAtualizar = new javax.swing.JButton();
         botaoRemover = new javax.swing.JButton();
-        botaoPermissao = new javax.swing.JButton();
         botaoImprimir = new javax.swing.JButton();
         panelBoard1 = new com.dxc.gestao.venda.visao.componentes.PanelBoard();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaUsuario = new com.dxc.gestao.venda.visao.componentes.Tabela();
+        tabelaCliente = new com.dxc.gestao.venda.visao.componentes.Tabela();
+
+        dialogCadastro.setBackground(new java.awt.Color(255, 255, 255));
+
+        background.setBackground(new java.awt.Color(255, 255, 255));
+        background.setOpaque(true);
+
+        javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
+        background.setLayout(backgroundLayout);
+        backgroundLayout.setHorizontalGroup(
+            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        backgroundLayout.setVerticalGroup(
+            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 244, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout dialogCadastroLayout = new javax.swing.GroupLayout(dialogCadastro.getContentPane());
+        dialogCadastro.getContentPane().setLayout(dialogCadastroLayout);
+        dialogCadastroLayout.setHorizontalGroup(
+            dialogCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(background)
+        );
+        dialogCadastroLayout.setVerticalGroup(
+            dialogCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(background)
+        );
+
+        panelBoard2.setBackground(new java.awt.Color(255, 255, 255));
+        panelBoard2.setOpaque(true);
+
+        labelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelTitulo.setForeground(new java.awt.Color(28, 181, 224));
+        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelTitulo.setText("CADASTRO");
+
+        campoDeTextoNome.setDica("Nome");
+        campoDeTextoNome.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\user.png")); // NOI18N
+
+        campoDeTextoTelefone.setDica("Telefone");
+        campoDeTextoTelefone.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\telefone.png")); // NOI18N
+
+        campoDeTextoMorada.setDica("Morada");
+        campoDeTextoMorada.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\morada.png")); // NOI18N
+
+        botaoSalvar.setBackground(new java.awt.Color(28, 181, 224));
+        botaoSalvar.setForeground(new java.awt.Color(255, 255, 255));
+        botaoSalvar.setText("Salvar");
+        botaoSalvar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        javax.swing.GroupLayout panelBoard2Layout = new javax.swing.GroupLayout(panelBoard2);
+        panelBoard2.setLayout(panelBoard2Layout);
+        panelBoard2Layout.setHorizontalGroup(
+            panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBoard2Layout.createSequentialGroup()
+                .addContainerGap(71, Short.MAX_VALUE)
+                .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(campoDeTextoMorada, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(campoDeTextoTelefone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                        .addComponent(campoDeTextoNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(70, 70, 70))
+            .addGroup(panelBoard2Layout.createSequentialGroup()
+                .addGap(168, 168, 168)
+                .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelBoard2Layout.setVerticalGroup(
+            panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBoard2Layout.createSequentialGroup()
+                .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(campoDeTextoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoDeTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoDeTextoMorada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 153, 153));
@@ -134,18 +303,6 @@ public class FormularioCliente extends javax.swing.JPanel {
         });
         jPanel1.add(botaoRemover);
 
-        botaoPermissao.setBackground(new java.awt.Color(0, 0, 70));
-        botaoPermissao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botaoPermissao.setForeground(new java.awt.Color(255, 255, 255));
-        botaoPermissao.setText("Permissão");
-        botaoPermissao.setActionCommand("permissao");
-        botaoPermissao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoPermissaoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(botaoPermissao);
-
         botaoImprimir.setBackground(new java.awt.Color(0, 0, 70));
         botaoImprimir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         botaoImprimir.setForeground(new java.awt.Color(255, 255, 255));
@@ -157,7 +314,7 @@ public class FormularioCliente extends javax.swing.JPanel {
 
         jScrollPane1.setBorder(null);
 
-        tabelaUsuario.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -165,7 +322,7 @@ public class FormularioCliente extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tabelaUsuario);
+        jScrollPane1.setViewportView(tabelaCliente);
 
         javax.swing.GroupLayout panelBoard1Layout = new javax.swing.GroupLayout(panelBoard1);
         panelBoard1.setLayout(panelBoard1Layout);
@@ -215,25 +372,28 @@ public class FormularioCliente extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
-    private void botaoPermissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPermissaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoPermissaoActionPerformed
-
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLayeredPane background;
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoAtualizar;
     private javax.swing.JButton botaoImprimir;
-    private javax.swing.JButton botaoPermissao;
     private javax.swing.JButton botaoRemover;
+    private com.dxc.gestao.venda.visao.componentes.Botao botaoSalvar;
+    private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoMorada;
+    private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoNome;
+    private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoTelefone;
+    private javax.swing.JDialog dialogCadastro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelTitulo;
     private com.dxc.gestao.venda.visao.componentes.PanelBoard panelBoard1;
-    private com.dxc.gestao.venda.visao.componentes.Tabela tabelaUsuario;
+    private com.dxc.gestao.venda.visao.componentes.PanelBoard panelBoard2;
+    private com.dxc.gestao.venda.visao.componentes.Tabela tabelaCliente;
     // End of variables declaration//GEN-END:variables
 }

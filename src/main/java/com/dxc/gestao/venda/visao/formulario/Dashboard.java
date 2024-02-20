@@ -31,6 +31,9 @@ public class Dashboard extends javax.swing.JFrame {
         menu1.addEventoMenuSelecionado(e -> {
             menuSelectionadoIndex = e;
             formularioUsuario.setMenuSelectionadoIndex(e);
+            formularioCliente.setMenuSelectionadoIndex(e);
+            formularioProduto.setMenuSelectionadoIndex(e);
+            
             switch (e) {
                 case 0 -> { setForm(formularioPrincipal); }
                 case 1 -> { setForm(formularioProduto); }
@@ -52,11 +55,11 @@ public class Dashboard extends javax.swing.JFrame {
     }
     
     private void inicializaFormulario(Long usuarioId, Cabecalho cabecalho, Dashboard dashboard) {
+        formularioPrincipal = new FormularioPrincipal();
         formularioProduto = new FormularioProduto(usuarioId, cabecalho, dashboard);
         formularioEstoque = new FormularioEstoque(usuarioId, cabecalho);
         formularioCliente = new FormularioCliente(usuarioId, cabecalho);
         formularioVenda = new FormularioVenda(usuarioId, cabecalho);
-        formularioPrincipal = new FormularioPrincipal();
         formularioUsuario = new FormularioUsuario(usuarioId, cabecalho);
         
 //        formularioProdutoRegistra = new FormularioProdutoRegistra();
@@ -94,7 +97,11 @@ public class Dashboard extends javax.swing.JFrame {
     public int getMenuSelectionadoIndex() {
         return menuSelectionadoIndex;
     }
-  
+
+    public FormularioPrincipal getFormularioPrincipal() {
+        return formularioPrincipal;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

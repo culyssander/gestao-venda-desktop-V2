@@ -11,6 +11,7 @@ com\dxc\gestao\venda\modelo\servico\CategoriaServico$1.class
 com\dxc\gestao\venda\visao\formulario\FormularioUsuario$11.class
 com\dxc\gestao\venda\visao\formulario\FormularioVenda$1.class
 com\dxc\gestao\venda\visao\formulario\FormularioPrincipal.class
+com\dxc\gestao\venda\modelo\servico\ClienteServico.class
 com\dxc\gestao\venda\visao\formulario\FormularioPrincipal$1.class
 com\dxc\gestao\venda\modelo\entidade\Estoque.class
 com\dxc\gestao\venda\modelo\repositorio\impl\PermissaoRepositorioPersonalizado.class
@@ -47,7 +48,9 @@ com\dxc\gestao\venda\modelo\servico\LoginServico$1.class
 com\dxc\gestao\venda\modelo\servico\EstoqueHistoricoServico$2.class
 com\dxc\gestao\venda\visao\formulario\Login$2.class
 com\dxc\gestao\venda\controlador\FormularioEstoqueControlador.class
+com\dxc\gestao\venda\modelo\servico\ClienteServico$1.class
 com\dxc\gestao\venda\modelo\entidade\Produto.class
+com\dxc\gestao\venda\modelo\tabela\modelo\ClienteModelo.class
 com\dxc\gestao\venda\visao\formulario\FormularioUsuario$3.class
 com\dxc\gestao\venda\visao\formulario\FormularioPrincipal$3.class
 com\dxc\gestao\venda\visao\componentes\Mensagem$TipoDeMensagem.class
@@ -147,5 +150,6 @@ com\dxc\gestao\venda\visao\componentes\MenuItem$1.class
 com\dxc\gestao\venda\modelo\entidade\EstoqueHistorico.class
 com\dxc\gestao\venda\modelo\conexao\Conexao.class
 com\dxc\gestao\venda\visao\formulario\FormularioProduto.class
+com\dxc\gestao\venda\modelo\entidade\Cliente$ClienteBuilder.class
 com\dxc\gestao\venda\modelo\entidade\Cliente.class
 com\dxc\gestao\venda\visao\componentes\Botao$1.class

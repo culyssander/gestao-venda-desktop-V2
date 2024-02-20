@@ -27,7 +27,11 @@ public class ProdutoServico {
     public List<ProdutoDto> encontrarTodos() {
         List<Produto> lista = produtoRepositorio.encontrarTodos();
         
-        return lista.stream()
+        return getProdutoDtos(lista);
+    }
+    
+    private List<ProdutoDto> getProdutoDtos(List<Produto> produtos) {
+        return produtos.stream()
              .map(p -> {
                     Optional<Categoria> categoria = categoriaRepositorio.encontrarPeloId(p.getCategoriaId());
                     return ProdutoDto.builder()
@@ -72,6 +76,16 @@ public class ProdutoServico {
             return e.getMessage();
         }
         return "Erro ao remover o produto";
+    }
+    
+    public List<ProdutoDto> encontrarPeloAtributo(String texto) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("nome", texto);
+        map.put("preco", texto);
+        
+        List<Produto> lista = produtoRepositorio.encontrarPeloAtributoUsandoOR(map, true);
+        
+        return getProdutoDtos(lista);
     }
     
 }

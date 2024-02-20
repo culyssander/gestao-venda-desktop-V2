@@ -28,6 +28,7 @@ C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\CampoDeTexto.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\servico\EstoqueHistoricoServico.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\formulario\Dashboard.java
+C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\servico\ClienteServico.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\servico\UsuarioServico.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\conexao\Conexao.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\controlador\DashboardControlador.java
@@ -69,6 +70,7 @@ C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\EstoqueTipo.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\controlador\LoginControlador.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\controlador\FormularioPrincipalControlador.java
+C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\tabela\modelo\ClienteModelo.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\modelo\CartaoModelo.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\Tabela.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\Cartao.java

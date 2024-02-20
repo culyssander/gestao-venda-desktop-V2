@@ -44,11 +44,14 @@ public class UsuarioServico {
            boolean result = usuarioRepositorio.salvar(usuario);
            
            if (result) {
-               List<Usuario> lista = usuarioRepositorio.encontrarPeloAtributoUsandoAND(map, false);
-               if (!lista.isEmpty()) 
-                   permissaoServico.salvarPermissaoDoUsuario(lista.get(0).getId(), Perfil.valueOf(usuario.getPerfil().toUpperCase()));
-               return "Usuario salvando com sucesso!!!";
-           }
+                if (usuario.getId() == null) {
+                    List<Usuario> lista = usuarioRepositorio.encontrarPeloAtributoUsandoAND(map, false);
+                    if (!lista.isEmpty()) {
+                        permissaoServico.salvarPermissaoDoUsuario(lista.get(0).getId(), Perfil.valueOf(usuario.getPerfil().toUpperCase()));
+                    }
+                }
+                return "Usuario salvando com sucesso!!!";
+            }
         } catch (Exception e) {
             List<Usuario> lista = usuarioRepositorio.encontrarPeloAtributoUsandoAND(map, false);
             usuarioRepositorio.removerPeloId(lista.get(0).getId());
