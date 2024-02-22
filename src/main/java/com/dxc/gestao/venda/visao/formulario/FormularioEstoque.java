@@ -6,6 +6,8 @@ import com.dxc.gestao.venda.visao.componentes.Cabecalho;
 import com.dxc.gestao.venda.visao.componentes.Tabela;
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import net.miginfocom.swing.MigLayout;
 
 public class FormularioEstoque extends javax.swing.JPanel {
     
@@ -13,6 +15,7 @@ public class FormularioEstoque extends javax.swing.JPanel {
     private int menuSelectionadoIndex = -1;
     private Cabecalho cabecalho;
     private Long usuarioId;
+    private MigLayout layout;
 
     public FormularioEstoque(Long usuarioId, Cabecalho cabecalho) {
         initComponents();
@@ -24,6 +27,11 @@ public class FormularioEstoque extends javax.swing.JPanel {
         
         formularioEstoqueControlador = new FormularioEstoqueControlador(this);
         this.cabecalho = cabecalho;
+        
+        this.layout = new MigLayout("fill, insets");
+        background.setLayout(layout);
+        background.add(panelBoard2);
+        
         evento();
         eventoDoTeclado();
     }
@@ -83,11 +91,26 @@ public class FormularioEstoque extends javax.swing.JPanel {
     public JButton getBotaoRemover() {
         return botaoRemover;
     }
+
+    public JDialog getjDialog() {
+        return jDialog1;
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
+        background = new javax.swing.JLayeredPane();
+        panelBoard2 = new com.dxc.gestao.venda.visao.componentes.PanelBoard();
+        labelTitulo = new javax.swing.JLabel();
+        campoDeTextoNome = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
+        campoDeTextoTelefone = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
+        campoDeTextoMorada = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
+        botaoSalvar = new com.dxc.gestao.venda.visao.componentes.Botao();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         botaoAdicionar = new javax.swing.JButton();
@@ -98,6 +121,103 @@ public class FormularioEstoque extends javax.swing.JPanel {
         panelBoard1 = new com.dxc.gestao.venda.visao.componentes.PanelBoard();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaUsuario = new com.dxc.gestao.venda.visao.componentes.Tabela();
+
+        javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
+        background.setLayout(backgroundLayout);
+        backgroundLayout.setHorizontalGroup(
+            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 445, Short.MAX_VALUE)
+        );
+        backgroundLayout.setVerticalGroup(
+            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 346, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(background)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(background)
+        );
+
+        panelBoard2.setBackground(new java.awt.Color(255, 255, 255));
+        panelBoard2.setOpaque(true);
+
+        labelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelTitulo.setForeground(new java.awt.Color(28, 181, 224));
+        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelTitulo.setText("CADASTRO");
+
+        campoDeTextoNome.setDica("Nome");
+        campoDeTextoNome.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\user.png")); // NOI18N
+
+        campoDeTextoTelefone.setDica("Quantidade");
+        campoDeTextoTelefone.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\telefone.png")); // NOI18N
+
+        campoDeTextoMorada.setDica("Observação");
+        campoDeTextoMorada.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\morada.png")); // NOI18N
+
+        botaoSalvar.setBackground(new java.awt.Color(28, 181, 224));
+        botaoSalvar.setForeground(new java.awt.Color(255, 255, 255));
+        botaoSalvar.setText("Salvar");
+        botaoSalvar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jRadioButton1.setForeground(new java.awt.Color(28, 181, 224));
+        jRadioButton1.setSelected(true);
+        jRadioButton1.setText("Ativo");
+
+        buttonGroup1.add(jRadioButton2);
+        jRadioButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jRadioButton2.setForeground(new java.awt.Color(28, 181, 224));
+        jRadioButton2.setText("Desativo");
+
+        javax.swing.GroupLayout panelBoard2Layout = new javax.swing.GroupLayout(panelBoard2);
+        panelBoard2.setLayout(panelBoard2Layout);
+        panelBoard2Layout.setHorizontalGroup(
+            panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelBoard2Layout.createSequentialGroup()
+                .addGap(168, 168, 168)
+                .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBoard2Layout.createSequentialGroup()
+                .addContainerGap(71, Short.MAX_VALUE)
+                .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelBoard2Layout.createSequentialGroup()
+                        .addComponent(jRadioButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton2))
+                    .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(campoDeTextoMorada, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(campoDeTextoTelefone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                            .addComponent(campoDeTextoNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(70, 70, 70))
+        );
+        panelBoard2Layout.setVerticalGroup(
+            panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBoard2Layout.createSequentialGroup()
+                .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(campoDeTextoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoDeTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoDeTextoMorada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2))
+                .addGap(18, 18, 18)
+                .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 153, 153));
@@ -224,15 +344,26 @@ public class FormularioEstoque extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLayeredPane background;
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoAtualizar;
     private javax.swing.JButton botaoImprimir;
     private javax.swing.JButton botaoPermissao;
     private javax.swing.JButton botaoRemover;
+    private com.dxc.gestao.venda.visao.componentes.Botao botaoSalvar;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoMorada;
+    private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoNome;
+    private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoTelefone;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelTitulo;
     private com.dxc.gestao.venda.visao.componentes.PanelBoard panelBoard1;
+    private com.dxc.gestao.venda.visao.componentes.PanelBoard panelBoard2;
     private com.dxc.gestao.venda.visao.componentes.Tabela tabelaUsuario;
     // End of variables declaration//GEN-END:variables
 }

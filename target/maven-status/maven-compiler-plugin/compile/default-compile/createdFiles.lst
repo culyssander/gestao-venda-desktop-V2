@@ -19,6 +19,7 @@ com\dxc\gestao\venda\visao\componentes\ListaMenu$1.class
 com\dxc\gestao\venda\visao\componentes\TabelaCabecalho.class
 com\dxc\gestao\venda\visao\componentes\PanelBoard.class
 com\dxc\gestao\venda\visao\formulario\Login$6.class
+com\dxc\gestao\venda\modelo\dto\EstoqueDto.class
 com\dxc\gestao\venda\modelo\entidade\PermissaoUsuario.class
 com\dxc\gestao\venda\modelo\tabela\modelo\CategoriaModelo.class
 com\dxc\gestao\venda\modelo\dto\HistoricoEstoqueDto$HistoricoEstoqueDtoBuilder.class
@@ -91,6 +92,7 @@ com\dxc\gestao\venda\controlador\LoginControlador.class
 com\dxc\gestao\venda\visao\formulario\FormularioUsuario$6.class
 com\dxc\gestao\venda\modelo\entidade\Categoria.class
 com\dxc\gestao\venda\modelo\servico\PermissaoServico$1.class
+com\dxc\gestao\venda\visao\componentes\PanelCiclo.class
 com\dxc\gestao\venda\modelo\servico\ProdutoServico$1.class
 com\dxc\gestao\venda\visao\componentes\ModernScrollBarUI$InvisibleScrollBarButton.class
 com\dxc\gestao\venda\modelo\entidade\Usuario.class

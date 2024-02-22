@@ -7,6 +7,7 @@ C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\Perfil.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\formulario\Formulario.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\servico\PermissaoServico.java
+C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\PanelCiclo.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\controlador\FormularioUsuarioControlador.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\repositorio\CrudRepositorio.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\conexao\ConexaoMySQL.java
@@ -15,6 +16,7 @@ C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\Categoria.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\EstoqueHistorico.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\ListaMenu.java
+C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\dto\EstoqueDto.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\servico\LoginServico.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\servico\EntidadeServico.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\servico\CategoriaServico.java

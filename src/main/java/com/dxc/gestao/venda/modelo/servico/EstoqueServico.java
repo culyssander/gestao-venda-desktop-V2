@@ -3,6 +3,7 @@ package com.dxc.gestao.venda.modelo.servico;
 import com.dxc.gestao.venda.modelo.entidade.Estoque;
 import com.dxc.gestao.venda.modelo.repositorio.CrudRepositorio;
 import com.dxc.gestao.venda.modelo.repositorio.impl.CrudRepositorioImpl;
+import java.util.List;
 
 public class EstoqueServico {
     
@@ -16,5 +17,6 @@ public class EstoqueServico {
         return estoqueRepositorio.totalDeArquivo();
     }
     
+//    public List<Estoque>
     
 }
