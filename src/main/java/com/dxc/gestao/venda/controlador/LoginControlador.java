@@ -38,7 +38,7 @@ public class LoginControlador implements ActionListener{
         String senha = String.valueOf(login.getCampoTextoLoginSenha().getPassword());
         LoginResponse loginResponse = loginServico.login(email, senha);
         if (loginResponse.isResposta()) {
-            login.mostrMensagem(Mensagem.TipoDeMensagem.SUCESSO, "Login com sucesso!");
+            login.getMostrarMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.SUCESSO, "Login com sucesso!");
             login.getPanelLoading().setVisible(true);
             new Thread(
                     () -> {
@@ -53,7 +53,7 @@ public class LoginControlador implements ActionListener{
                     }
             ).start();
         } else {
-            login.mostrMensagem(Mensagem.TipoDeMensagem.ERRO, "Email ou Senha invalida...");
+            login.getMostrarMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, "Email ou Senha invalida...");
         }
     }
 
@@ -69,7 +69,7 @@ public class LoginControlador implements ActionListener{
 
         if (email.isBlank() || senha.isBlank()) {
             String mensagem = "O campo email e senha são obrigatorio...";
-            login.mostrMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
+            login.getMostrarMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
             throw new RuntimeException(mensagem);
         }
     }

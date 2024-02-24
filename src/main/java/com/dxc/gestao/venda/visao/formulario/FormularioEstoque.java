@@ -2,22 +2,29 @@ package com.dxc.gestao.venda.visao.formulario;
 
 import com.dxc.gestao.venda.controlador.FormularioEstoqueControlador;
 import com.dxc.gestao.venda.visao.componentes.BarraDeRolar;
+import com.dxc.gestao.venda.visao.componentes.Botao;
 import com.dxc.gestao.venda.visao.componentes.Cabecalho;
+import com.dxc.gestao.venda.visao.componentes.CampoDeTexto;
 import com.dxc.gestao.venda.visao.componentes.Tabela;
+import com.dxc.gestao.venda.visao.util.MensagemUtil;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import net.miginfocom.swing.MigLayout;
 
 public class FormularioEstoque extends javax.swing.JPanel {
     
     private final FormularioEstoqueControlador formularioEstoqueControlador;
+    private final FormularioPrincipal formularioPrincipal;
     private int menuSelectionadoIndex = -1;
     private Cabecalho cabecalho;
     private Long usuarioId;
     private MigLayout layout;
+    private MensagemUtil mensagem;
 
-    public FormularioEstoque(Long usuarioId, Cabecalho cabecalho) {
+    public FormularioEstoque(Long usuarioId, Cabecalho cabecalho, FormularioPrincipal formularioPrincipal) {
         initComponents();
         setOpaque(false);
         
@@ -27,15 +34,25 @@ public class FormularioEstoque extends javax.swing.JPanel {
         
         formularioEstoqueControlador = new FormularioEstoqueControlador(this);
         this.cabecalho = cabecalho;
+        this.formularioPrincipal = formularioPrincipal;
         
         this.layout = new MigLayout("fill, insets");
         background.setLayout(layout);
         background.add(panelBoard2);
+        mensagem = new MensagemUtil(background, layout);
         
         evento();
         eventoDoTeclado();
     }
 
+    public FormularioPrincipal getFormularioPrincipal() {
+        return formularioPrincipal;
+    }
+    
+    public MensagemUtil getMensagem() {
+        return mensagem;
+    }
+    
     public Cabecalho getCabecalho() {
         return cabecalho;
     }
@@ -48,16 +65,17 @@ public class FormularioEstoque extends javax.swing.JPanel {
         this.menuSelectionadoIndex = menuSelectionadoIndex;
     }
     
-    public void eventoDoTeclado() {
+    private void eventoDoTeclado() {
         cabecalho.getPesquisar().addKeyListener(formularioEstoqueControlador);
+        campoDeTextoNome.addKeyListener(formularioEstoqueControlador);
     }
 
     private void evento() {
         botaoAdicionar.addActionListener(formularioEstoqueControlador);
         botaoAtualizar.addActionListener(formularioEstoqueControlador);
         botaoImprimir.addActionListener(formularioEstoqueControlador);
-        botaoPermissao.addActionListener(formularioEstoqueControlador);
         botaoRemover.addActionListener(formularioEstoqueControlador);
+        botaoSalvar.addActionListener(formularioEstoqueControlador);
     }
 
     public Long getUsuarioId() {
@@ -68,8 +86,8 @@ public class FormularioEstoque extends javax.swing.JPanel {
         this.usuarioId = usuarioId;
     }
 
-    public Tabela getTabelaUsuario() {
-        return tabelaUsuario;
+    public Tabela getTabela() {
+        return tabelaEstoque;
     }
 
     public JButton getBotaoAdicionar() {
@@ -83,17 +101,41 @@ public class FormularioEstoque extends javax.swing.JPanel {
     public JButton getBotaoImprimir() {
         return botaoImprimir;
     }
-
-    public JButton getBotaoPermissao() {
-        return botaoPermissao;
-    }
-
+    
     public JButton getBotaoRemover() {
         return botaoRemover;
     }
 
-    public JDialog getjDialog() {
+    public JDialog getDialog() {
         return jDialog1;
+    }
+
+    public CampoDeTexto getCampoDeTextoNome() {
+        return campoDeTextoNome;
+    }
+
+    public CampoDeTexto getCampoDeTextoObservacao() {
+        return campoDeTextoObservacao;
+    }
+
+    public CampoDeTexto getCampoDeTextoQuantidade() {
+        return campoDeTextoQuantidade;
+    }
+
+    public JLabel getLabelProduto() {
+        return labelProduto;
+    }
+
+    public Botao getBotaoSalvar() {
+        return botaoSalvar;
+    }
+
+    public JRadioButton getRadioAtivo() {
+        return radioAtivo;
+    }
+
+    public JRadioButton getRadioDesativo() {
+        return radioDesativo;
     }
     
     @SuppressWarnings("unchecked")
@@ -105,22 +147,25 @@ public class FormularioEstoque extends javax.swing.JPanel {
         panelBoard2 = new com.dxc.gestao.venda.visao.componentes.PanelBoard();
         labelTitulo = new javax.swing.JLabel();
         campoDeTextoNome = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
-        campoDeTextoTelefone = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
-        campoDeTextoMorada = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
+        campoDeTextoQuantidade = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
+        campoDeTextoObservacao = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
         botaoSalvar = new com.dxc.gestao.venda.visao.componentes.Botao();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        radioAtivo = new javax.swing.JRadioButton();
+        radioDesativo = new javax.swing.JRadioButton();
+        labelProduto = new javax.swing.JLabel();
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         botaoAdicionar = new javax.swing.JButton();
         botaoAtualizar = new javax.swing.JButton();
         botaoRemover = new javax.swing.JButton();
-        botaoPermissao = new javax.swing.JButton();
         botaoImprimir = new javax.swing.JButton();
         panelBoard1 = new com.dxc.gestao.venda.visao.componentes.PanelBoard();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaUsuario = new com.dxc.gestao.venda.visao.componentes.Tabela();
+        tabelaEstoque = new com.dxc.gestao.venda.visao.componentes.Tabela();
+
+        background.setBackground(new java.awt.Color(255, 255, 255));
+        background.setOpaque(true);
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
@@ -150,32 +195,35 @@ public class FormularioEstoque extends javax.swing.JPanel {
         labelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelTitulo.setForeground(new java.awt.Color(28, 181, 224));
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelTitulo.setText("CADASTRO");
+        labelTitulo.setText("Registro do estoque");
 
-        campoDeTextoNome.setDica("Nome");
-        campoDeTextoNome.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\user.png")); // NOI18N
+        campoDeTextoNome.setDica("ID ou Nome do produto");
+        campoDeTextoNome.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\produto1.png")); // NOI18N
 
-        campoDeTextoTelefone.setDica("Quantidade");
-        campoDeTextoTelefone.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\telefone.png")); // NOI18N
+        campoDeTextoQuantidade.setDica("Quantidade");
+        campoDeTextoQuantidade.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\quantidade.png")); // NOI18N
 
-        campoDeTextoMorada.setDica("Observação");
-        campoDeTextoMorada.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\morada.png")); // NOI18N
+        campoDeTextoObservacao.setDica("Observação");
+        campoDeTextoObservacao.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\observacao.png")); // NOI18N
 
         botaoSalvar.setBackground(new java.awt.Color(28, 181, 224));
         botaoSalvar.setForeground(new java.awt.Color(255, 255, 255));
         botaoSalvar.setText("Salvar");
         botaoSalvar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jRadioButton1.setForeground(new java.awt.Color(28, 181, 224));
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Ativo");
+        buttonGroup1.add(radioAtivo);
+        radioAtivo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        radioAtivo.setForeground(new java.awt.Color(28, 181, 224));
+        radioAtivo.setSelected(true);
+        radioAtivo.setText("Ativo");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jRadioButton2.setForeground(new java.awt.Color(28, 181, 224));
-        jRadioButton2.setText("Desativo");
+        buttonGroup1.add(radioDesativo);
+        radioDesativo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        radioDesativo.setForeground(new java.awt.Color(28, 181, 224));
+        radioDesativo.setText("Desativo");
+
+        labelProduto.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelProduto.setForeground(new java.awt.Color(120, 120, 120));
 
         javax.swing.GroupLayout panelBoard2Layout = new javax.swing.GroupLayout(panelBoard2);
         panelBoard2.setLayout(panelBoard2Layout);
@@ -187,18 +235,23 @@ public class FormularioEstoque extends javax.swing.JPanel {
                 .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBoard2Layout.createSequentialGroup()
-                .addContainerGap(71, Short.MAX_VALUE)
+                .addContainerGap(69, Short.MAX_VALUE)
                 .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBoard2Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jRadioButton2))
-                    .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(campoDeTextoMorada, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(campoDeTextoTelefone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
-                            .addComponent(campoDeTextoNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(70, 70, 70))
+                        .addComponent(labelProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBoard2Layout.createSequentialGroup()
+                        .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(campoDeTextoObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(campoDeTextoQuantidade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                                    .addComponent(campoDeTextoNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(panelBoard2Layout.createSequentialGroup()
+                                .addComponent(radioAtivo)
+                                .addGap(18, 18, 18)
+                                .addComponent(radioDesativo)))
+                        .addGap(72, 72, 72))))
         );
         panelBoard2Layout.setVerticalGroup(
             panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,16 +260,18 @@ public class FormularioEstoque extends javax.swing.JPanel {
                 .addGap(34, 34, 34)
                 .addComponent(campoDeTextoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoDeTextoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(campoDeTextoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoDeTextoMorada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(campoDeTextoObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelBoard2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
-                .addGap(18, 18, 18)
+                    .addComponent(radioAtivo)
+                    .addComponent(radioDesativo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
                 .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
@@ -253,18 +308,6 @@ public class FormularioEstoque extends javax.swing.JPanel {
         });
         jPanel1.add(botaoRemover);
 
-        botaoPermissao.setBackground(new java.awt.Color(0, 0, 70));
-        botaoPermissao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botaoPermissao.setForeground(new java.awt.Color(255, 255, 255));
-        botaoPermissao.setText("Permissão");
-        botaoPermissao.setActionCommand("permissao");
-        botaoPermissao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoPermissaoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(botaoPermissao);
-
         botaoImprimir.setBackground(new java.awt.Color(0, 0, 70));
         botaoImprimir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         botaoImprimir.setForeground(new java.awt.Color(255, 255, 255));
@@ -276,7 +319,7 @@ public class FormularioEstoque extends javax.swing.JPanel {
 
         jScrollPane1.setBorder(null);
 
-        tabelaUsuario.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaEstoque.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -284,7 +327,7 @@ public class FormularioEstoque extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tabelaUsuario);
+        jScrollPane1.setViewportView(tabelaEstoque);
 
         javax.swing.GroupLayout panelBoard1Layout = new javax.swing.GroupLayout(panelBoard1);
         panelBoard1.setLayout(panelBoard1Layout);
@@ -334,10 +377,6 @@ public class FormularioEstoque extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
-    private void botaoPermissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPermissaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoPermissaoActionPerformed
-
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoAdicionarActionPerformed
@@ -348,22 +387,22 @@ public class FormularioEstoque extends javax.swing.JPanel {
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoAtualizar;
     private javax.swing.JButton botaoImprimir;
-    private javax.swing.JButton botaoPermissao;
     private javax.swing.JButton botaoRemover;
     private com.dxc.gestao.venda.visao.componentes.Botao botaoSalvar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoMorada;
     private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoNome;
-    private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoTelefone;
+    private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoObservacao;
+    private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoQuantidade;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelProduto;
     private javax.swing.JLabel labelTitulo;
     private com.dxc.gestao.venda.visao.componentes.PanelBoard panelBoard1;
     private com.dxc.gestao.venda.visao.componentes.PanelBoard panelBoard2;
-    private com.dxc.gestao.venda.visao.componentes.Tabela tabelaUsuario;
+    private javax.swing.JRadioButton radioAtivo;
+    private javax.swing.JRadioButton radioDesativo;
+    private com.dxc.gestao.venda.visao.componentes.Tabela tabelaEstoque;
     // End of variables declaration//GEN-END:variables
 }

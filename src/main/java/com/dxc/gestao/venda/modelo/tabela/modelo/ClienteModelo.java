@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 public class ClienteModelo extends AbstractTableModel {
     
     private List<Cliente> clientes;
-    private final String [] colunas = {"ID", "Nome", "Telefone", "Morada"};
+    private final String [] colunas = {"ID", "Nome", "CPF", "Morada"};
 
     public ClienteModelo(List<Cliente> clientes) {
         this.clientes = clientes;
@@ -30,7 +30,7 @@ public class ClienteModelo extends AbstractTableModel {
         switch(columnIndex) {
             case 0 -> { return cliente.getId() ;}
             case 1 -> { return cliente.getNome() ;}
-            case 2 -> { return cliente.getTelefone() ;}
+            case 2 -> { return cliente.getCpf() ;}
             case 3 -> { return cliente.getMorada() ;}
         }
         return null;

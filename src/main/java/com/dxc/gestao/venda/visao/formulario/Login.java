@@ -4,6 +4,7 @@ import com.dxc.gestao.venda.controlador.LoginControlador;
 import com.dxc.gestao.venda.visao.componentes.Mensagem;
 import com.dxc.gestao.venda.visao.componentes.PanelBoard;
 import com.dxc.gestao.venda.visao.componentes.PanelLoading;
+import com.dxc.gestao.venda.visao.util.MensagemUtil;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -25,6 +26,7 @@ public class Login extends javax.swing.JFrame {
     private LoginControlador loginControlador;
     private MigLayout layout;
     private PanelLoading loading;
+    private MensagemUtil mostrarMensagem;
 
     public Login() {
         initComponents();
@@ -38,11 +40,20 @@ public class Login extends javax.swing.JFrame {
         background.setLayout(layout);
         background.add(loading, "pos 0 0 100% 100%");
         background.add(panelBoard3, "pos 0 0 100% 100%");
-
+        mostrarMensagem = new MensagemUtil(background, layout);
         fechaTela();
         evento();
     }
 
+    public MensagemUtil getMostrarMensagem() {
+        return mostrarMensagem;
+    }
+    
+//    public void mostrMensagem(Mensagem.TipoDeMensagem tipoDeMensagem, String mensagem) {
+//        mostrarMensagem.mostrarMensagem(tipoDeMensagem, mensagem);
+//    }
+
+    /*
     public void mostrMensagem(Mensagem.TipoDeMensagem tipoDeMensagem, String mensagem) {
         Mensagem ms = new Mensagem();
         ms.mostrarMensagem(tipoDeMensagem, mensagem);
@@ -102,7 +113,7 @@ public class Login extends javax.swing.JFrame {
                     }
                 }).start();
     }
-    
+ */   
     private void moveTelaLogin(JFrame frame) {
         panelMovimento.addMouseListener(new MouseAdapter() {
             @Override

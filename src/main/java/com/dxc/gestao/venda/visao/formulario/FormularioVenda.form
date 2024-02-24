@@ -236,7 +236,7 @@
             <Property name="rows" type="int" value="1"/>
           </Layout>
           <SubComponents>
-            <Component class="com.dxc.gestao.venda.visao.componentes.Botao" name="botao1">
+            <Component class="com.dxc.gestao.venda.visao.componentes.Botao" name="botaoAdicionarNoCarrinho">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e0" green="b5" red="1c" type="rgb"/>
@@ -245,6 +245,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Adiciona"/>
+                <Property name="actionCommand" type="java.lang.String" value="carinho"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>
@@ -551,7 +552,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <Component id="jLabel20" min="-2" pref="32" max="-2" attributes="0"/>
-                  <EmptySpace pref="50" max="32767" attributes="0"/>
+                  <EmptySpace pref="20" max="32767" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" pref="162" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" pref="35" max="-2" attributes="0"/>
@@ -584,6 +585,13 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel20">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e0" green="b5" red="1c" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Checkout"/>
           </Properties>
         </Component>
@@ -608,6 +616,8 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="com.dxc.gestao.venda.visao.componentes.Mensagem" name="mensagem1">
+    </Component>
   </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>

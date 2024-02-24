@@ -115,9 +115,9 @@
         </Component>
         <Component class="com.dxc.gestao.venda.visao.componentes.CampoDeTexto" name="campoDeTextoTelefone">
           <Properties>
-            <Property name="dica" type="java.lang.String" value="Telefone"/>
+            <Property name="dica" type="java.lang.String" value="CPF"/>
             <Property name="prefixoIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\icon\telefone.png"/>
+              <Image iconType="2" name="C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\icon\id.png"/>
             </Property>
           </Properties>
         </Component>

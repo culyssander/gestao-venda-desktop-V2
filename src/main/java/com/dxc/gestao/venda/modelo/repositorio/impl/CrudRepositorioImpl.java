@@ -384,4 +384,8 @@ public abstract class CrudRepositorioImpl<T extends Object> implements CrudRepos
         return 0L;
     }
 
+    public Conexao getConexao() {
+        return conexao;
+    }
+
 }

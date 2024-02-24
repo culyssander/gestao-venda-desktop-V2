@@ -225,8 +225,8 @@ public class FormularioCliente extends javax.swing.JPanel {
         campoDeTextoNome.setDica("Nome");
         campoDeTextoNome.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\user.png")); // NOI18N
 
-        campoDeTextoTelefone.setDica("Telefone");
-        campoDeTextoTelefone.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\telefone.png")); // NOI18N
+        campoDeTextoTelefone.setDica("CPF");
+        campoDeTextoTelefone.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\id.png")); // NOI18N
 
         campoDeTextoMorada.setDica("Morada");
         campoDeTextoMorada.setPrefixoIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\morada.png")); // NOI18N

@@ -88,4 +88,20 @@ public class ProdutoServico {
         return getProdutoDtos(lista);
     }
     
+    public Optional<Produto> encontrarPeloId(Long id) {
+        return produtoRepositorio.encontrarPeloId(id);
+    }
+    
+    public Produto encontraPeloNome(String nome) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("nome", nome);
+        
+        List<Produto> lista = produtoRepositorio.encontrarPeloAtributoUsandoAND(map, false);
+        
+        if (lista.size() != 1)
+            return null;
+//            throw new RuntimeException("Erro ao buscar somente um produto");
+        
+       return lista.get(0);
+    }
 }

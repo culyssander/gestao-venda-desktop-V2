@@ -1,19 +1,30 @@
 package com.dxc.gestao.venda.visao.formulario;
 
 import com.dxc.gestao.venda.controlador.FormularioVendaControlador;
+import com.dxc.gestao.venda.modelo.entidade.VendaItem;
 import com.dxc.gestao.venda.visao.componentes.BarraDeRolar;
 import com.dxc.gestao.venda.visao.componentes.Cabecalho;
+import com.dxc.gestao.venda.visao.componentes.Mensagem;
 import com.dxc.gestao.venda.visao.componentes.Tabela;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import net.miginfocom.swing.MigLayout;
+import org.jdesktop.animation.timing.Animator;
+import org.jdesktop.animation.timing.TimingTarget;
+import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class FormularioVenda extends javax.swing.JPanel {
     
     private final FormularioVendaControlador formularioVendaControlador;
     private int menuSelectionadoIndex = -1;
+    private boolean mostrar = true;
     private Cabecalho cabecalho;
     private MigLayout layout;
     private Long usuarioId;
@@ -31,15 +42,50 @@ public class FormularioVenda extends javax.swing.JPanel {
         this.cabecalho = cabecalho;
         layout = new MigLayout("fill, insets");
         background.setLayout(layout);
-        background.add(panelBoard2);
+        background.add(panelBoard2, "pos 0 0 100% 100%");
+//        background.add(mensagem1, "pos 0.5al 0", 0);
+//        background.add(panelBoard4, "pos 0.5al 20", 0);
+//        mensagem1.setVisible(true);
+//        panelBoard4.setVisible(true);
+        
         evento();
         eventoDoTeclado();
         
        
     }
-    
+        
     private void inicializacao() {
         panelCarrinho.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        panelCarrinho.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                panelCarrinho.setBackground(new Color(0, 0, 70));
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                List<VendaItem> vendaItems = new ArrayList<>();
+                
+                VendaItem vendaItem = new VendaItem();
+                vendaItems.add(vendaItem);
+                
+                if (!vendaItems.isEmpty()) {
+                    mostrar = !mostrar;
+                    mostrarCarrinho();
+                } else {
+                    mostrMensagem(Mensagem.TipoDeMensagem.ERRO, "Carrinho vazio!");
+                }
+            }
+        });
+        
+        panelCarrinho.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                panelCarrinho.setBackground(new Color(28,181,224));
+            }
+            
+        });
     }
 
     public Cabecalho getCabecalho() {
@@ -64,6 +110,120 @@ public class FormularioVenda extends javax.swing.JPanel {
         botaoImprimir.addActionListener(formularioVendaControlador);
         botaoPermissao.addActionListener(formularioVendaControlador);
         botaoRemover.addActionListener(formularioVendaControlador);
+    }
+    
+    public void mostrMensagem(Mensagem.TipoDeMensagem tipoDeMensagem, String mensagem) {
+        Mensagem ms = new Mensagem();
+        ms.mostrarMensagem(tipoDeMensagem, mensagem);
+        
+        TimingTarget target = new TimingTargetAdapter() {
+            @Override
+            public void begin() {
+                if (!ms.isMostrarMensagem()) {
+                    background.add(ms, "pos 0.5al 0", 0); // adicionar no primeiro indice
+                    ms.setVisible(true);
+                    background.repaint();
+                }
+            }
+
+            @Override
+            public void timingEvent(float fraction) {
+                float f;
+                
+                if (ms.isMostrarMensagem()) {
+                    f = 20 * (1f - fraction);
+                } else {
+                    f = 20 * fraction;
+                }
+
+                layout.setComponentConstraints(ms, "pos 0.5al " + (int) (f - 20));
+                background.repaint();
+                background.revalidate();
+            }
+
+            @Override
+            public void end() {
+                if (ms.isMostrarMensagem()) {
+                    background.remove(ms);
+                    background.repaint();
+                    background.revalidate();
+                } else {
+                    ms.setMostrarMensagem(true);
+                }
+            }
+        };
+        
+        Animator animator = new Animator(300, target);
+        animator.setResolution(0);
+        animator.setAcceleration(0.5f);
+        animator.setDeceleration(0.5f);
+        animator.start();
+        
+        new Thread(
+                () ->{
+                    try {
+                        Thread.sleep(2000);
+                        animator.start();
+                    } catch (InterruptedException e) {
+                        System.out.println(e);
+                    }
+                }).start();
+    }
+    
+        public void mostrarCarrinho() {
+        TimingTarget target = new TimingTargetAdapter() {
+            @Override
+            public void begin() {
+                if (!mostrar) {
+                    background.add(panelBoard4, "pos 0.5al 240", 0); // adicionar no primeiro indice
+                    panelBoard4.setVisible(true);
+                    background.repaint();
+                }
+            }
+
+            @Override
+            public void timingEvent(float fraction) {
+                float f;
+                
+                if (mostrar) {
+                    f = 240 * (1f - fraction);
+                } else {
+                    f = 240 * fraction;
+                }
+
+                layout.setComponentConstraints(panelBoard4, "pos 0.5al " + (int) (f - 240));
+                background.repaint();
+                background.revalidate();
+            }
+
+            @Override
+            public void end() {
+                if (mostrar) {
+                    background.remove(panelBoard4);
+//                    panelBoard4.setVisible(false);
+                    background.repaint();
+                    background.revalidate();
+                } else {
+                    mostrar = false;
+                }
+            }
+        };
+        
+        Animator animator = new Animator(300, target);
+        animator.setResolution(0);
+        animator.setAcceleration(0.5f);
+        animator.setDeceleration(0.5f);
+        animator.start();
+        
+//        new Thread(
+//                () ->{
+//                    try {
+//                        Thread.sleep(2000);
+//                        animator.start();
+//                    } catch (InterruptedException e) {
+//                        System.out.println(e);
+//                    }
+//                }).start();
     }
 
     public Long getUsuarioId() {
@@ -120,7 +280,7 @@ public class FormularioVenda extends javax.swing.JPanel {
         campoDeTexto4 = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
         campoDeTexto5 = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
         jPanel2 = new javax.swing.JPanel();
-        botao1 = new com.dxc.gestao.venda.visao.componentes.Botao();
+        botaoAdicionarNoCarrinho = new com.dxc.gestao.venda.visao.componentes.Botao();
         botao2 = new com.dxc.gestao.venda.visao.componentes.Botao();
         botao3 = new com.dxc.gestao.venda.visao.componentes.Botao();
         jLabel6 = new javax.swing.JLabel();
@@ -145,6 +305,7 @@ public class FormularioVenda extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         botao4 = new com.dxc.gestao.venda.visao.componentes.Botao();
         botao5 = new com.dxc.gestao.venda.visao.componentes.Botao();
+        mensagem1 = new com.dxc.gestao.venda.visao.componentes.Mensagem();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         botaoAdicionar = new javax.swing.JButton();
@@ -234,11 +395,12 @@ public class FormularioVenda extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout());
 
-        botao1.setBackground(new java.awt.Color(28, 181, 224));
-        botao1.setForeground(new java.awt.Color(255, 255, 255));
-        botao1.setText("Adiciona");
-        botao1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jPanel2.add(botao1);
+        botaoAdicionarNoCarrinho.setBackground(new java.awt.Color(28, 181, 224));
+        botaoAdicionarNoCarrinho.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAdicionarNoCarrinho.setText("Adiciona");
+        botaoAdicionarNoCarrinho.setActionCommand("carinho");
+        botaoAdicionarNoCarrinho.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jPanel2.add(botaoAdicionarNoCarrinho);
 
         botao2.setBackground(new java.awt.Color(28, 181, 224));
         botao2.setForeground(new java.awt.Color(255, 255, 255));
@@ -452,6 +614,9 @@ public class FormularioVenda extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(tabela1);
 
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(28, 181, 224));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("Checkout");
 
         jPanel3.setLayout(new java.awt.GridLayout());
@@ -478,7 +643,7 @@ public class FormularioVenda extends javax.swing.JPanel {
             panelBoard4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBoard4Layout.createSequentialGroup()
                 .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -641,12 +806,12 @@ public class FormularioVenda extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane background;
-    private com.dxc.gestao.venda.visao.componentes.Botao botao1;
     private com.dxc.gestao.venda.visao.componentes.Botao botao2;
     private com.dxc.gestao.venda.visao.componentes.Botao botao3;
     private com.dxc.gestao.venda.visao.componentes.Botao botao4;
     private com.dxc.gestao.venda.visao.componentes.Botao botao5;
     private javax.swing.JButton botaoAdicionar;
+    private com.dxc.gestao.venda.visao.componentes.Botao botaoAdicionarNoCarrinho;
     private javax.swing.JButton botaoAtualizar;
     private javax.swing.JButton botaoImprimir;
     private javax.swing.JButton botaoPermissao;
@@ -686,6 +851,7 @@ public class FormularioVenda extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private com.dxc.gestao.venda.visao.componentes.Mensagem mensagem1;
     private com.dxc.gestao.venda.visao.componentes.PanelBoard panelBoard1;
     private com.dxc.gestao.venda.visao.componentes.PanelBoard panelBoard2;
     private com.dxc.gestao.venda.visao.componentes.PanelBoard panelBoard3;

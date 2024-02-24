@@ -42,6 +42,7 @@ C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\formulario\FormularioEstoqueRegistra.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\formulario\FormularioUsuario.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\controlador\FormularioProdutoControlador.java
+C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\util\MensagemUtil.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\PermissaoUsuario.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\servico\ProdutoServico.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\formulario\FormularioInfo.java
@@ -71,8 +72,10 @@ C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\controlador\FormularioEstoqueControlador.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\EstoqueTipo.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\controlador\LoginControlador.java
+C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\repositorio\impl\EstoqueRepositorioImpl.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\controlador\FormularioPrincipalControlador.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\tabela\modelo\ClienteModelo.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\modelo\CartaoModelo.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\Tabela.java
+C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\tabela\modelo\EstoqueModelo.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\Cartao.java

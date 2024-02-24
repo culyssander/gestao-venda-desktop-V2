@@ -39,5 +39,9 @@ public class EstoqueHistoricoServico {
                 })
                 .collect(Collectors.toList());
     }
+
+    public void salvar(EstoqueHistorico estoqueHistorico) {
+        estoqueHistoricoRepositorio.salvar(estoqueHistorico);
+    }
     
 }

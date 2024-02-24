@@ -36,8 +36,9 @@ public final class FormularioPrincipalControlador {
         String totalEstoque = String.format("Total %s", estoqueServico.quantidadeDeEstoque());
         this.formularioPrincipal.setTotalProduto(totalProduto);
         this.formularioPrincipal.setTotalEstoque(totalEstoque);
-        this.formularioPrincipal.setTotalVenda(totalProduto);
         this.formularioPrincipal.getTabela().setModel(estoqueHistoricoModelo);
+        this.formularioPrincipal.setTotalVenda(totalProduto);
+        
     }
     
     private void evento() {

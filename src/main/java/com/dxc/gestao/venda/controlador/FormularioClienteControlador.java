@@ -45,13 +45,13 @@ public class FormularioClienteControlador implements ActionListener, KeyListener
     
     private void salvar() {
         String nome = formularioCliente.getCampoDeTextoNome().getText().trim();
-        String telefone = formularioCliente.getCampoDeTextoTelefone().getText().trim();
+        String cpf = formularioCliente.getCampoDeTextoTelefone().getText().trim();
         String morada = formularioCliente.getCampoDeTextoMorada().getText().trim();
         
         Cliente cliente = Cliente.builder()
                 .id(clienteId)
                 .nome(nome)
-                .telefone(telefone)
+                .cpf(cpf)
                 .morada(morada)
                 .build();
         
@@ -103,7 +103,7 @@ public class FormularioClienteControlador implements ActionListener, KeyListener
         
         clienteId = cliente.getId();
         formularioCliente.getCampoDeTextoNome().setText(cliente.getNome());
-        formularioCliente.getCampoDeTextoTelefone().setText(cliente.getTelefone());
+        formularioCliente.getCampoDeTextoTelefone().setText(cliente.getCpf());
         formularioCliente.getCampoDeTextoMorada().setText(cliente.getMorada());
         
         formularioCliente.getDialogCadastro().pack();
