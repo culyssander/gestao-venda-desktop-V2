@@ -43,7 +43,7 @@ public class FormularioEstoqueControlador implements ActionListener, KeyListener
         estoqueServico = new EstoqueServico();
         produtoServico = new ProdutoServico();
         permissaoServico = new PermissaoServico();
-        estoqueHistoricoServico = new EstoqueHistoricoServico();
+        estoqueHistoricoServico = new EstoqueHistoricoServico(formularioEstoque.getUsuarioId());
         
         atualizaTabela();
     }
@@ -55,10 +55,11 @@ public class FormularioEstoqueControlador implements ActionListener, KeyListener
     }
     
     private void atualizaTabelaHistorico() {
-        List<EstoqueHistorico> estoqueHistoricos = estoqueHistoricoServico.encontraTodos(formularioEstoque.getUsuarioId());
+        List<EstoqueHistorico> estoqueHistoricos = estoqueHistoricoServico.encontraTodos();
         EstoqueHistoricoModelo modelo = new EstoqueHistoricoModelo(estoqueHistoricos);
         formularioEstoque.getFormularioPrincipal().getTabela().setModel(modelo);
-        formularioEstoque.getFormularioPrincipal().setTotalEstoque(String.format("Total %s", estoqueHistoricos.size()));
+        formularioEstoque.getFormularioPrincipal().getCartao3().getLabelCartaoValor().setText(String.format("Total %s", estoques.size()));
+//        formularioEstoque.getFormularioPrincipal().setTotalEstoque();
     }
 
     @Override
@@ -97,8 +98,10 @@ public class FormularioEstoqueControlador implements ActionListener, KeyListener
                 formularioEstoque.getTabela().setModel(estoqueModelo);
             }
             
-        } else {
-            String produtoIdOrNome = formularioEstoque.getCampoDeTextoNome().getText().trim();
+        }
+        String produtoIdOrNome = formularioEstoque.getCampoDeTextoNome().getText().trim();
+        
+        if (!produtoIdOrNome.isBlank()) {
             try {
                 long produtoId = Long.parseLong(produtoIdOrNome);
                 produto = produtoServico.encontrarPeloId(produtoId);
@@ -111,6 +114,7 @@ public class FormularioEstoqueControlador implements ActionListener, KeyListener
                 formularioEstoque.getLabelProduto().setText("");
             }
         }
+        
     }
 
     private void adicionar() {

@@ -21,7 +21,7 @@ public class EntidadeServico {
     public EntidadeServico() {
         repositorio = new CrudRepositorioImpl(Produto.class) {};
         permissaoServico = new PermissaoServico();
-        estoqueHistoricoServico = new EstoqueHistoricoServico();
+//        estoqueHistoricoServico = new EstoqueHistoricoServico();
     }
     
     public boolean salva() {

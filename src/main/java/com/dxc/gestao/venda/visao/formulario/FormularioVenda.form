@@ -65,16 +65,16 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="campoDeTexto5" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="campoDeTexto4" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="campoDeTexto3" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="campoDeTexto2" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="campoDeTextoClienteCPF" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="campoDeTextoValorPago" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="campoDeTextoDesconto" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="campoDeTextoQuantidade" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="comboBox2" pref="192" max="32767" attributes="0"/>
+                                      <Component id="comboBoxCategoria" pref="192" max="32767" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="comboBox1" min="-2" pref="190" max="-2" attributes="0"/>
+                                      <Component id="comboBoxProduto" min="-2" pref="190" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="campoDeTexto1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="campoDeTextoBuscarPeloId" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -99,22 +99,22 @@
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="campoDeTexto1" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoDeTextoBuscarPeloId" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="comboBox2" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                              <Component id="comboBox1" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="comboBoxCategoria" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="comboBoxProduto" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="campoDeTexto2" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoDeTextoQuantidade" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="campoDeTexto3" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoDeTextoDesconto" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="campoDeTexto4" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoDeTextoValorPago" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="campoDeTexto5" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoDeTextoClienteCPF" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="panelBoard3" max="32767" attributes="0"/>
                   </Group>
@@ -178,7 +178,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="com.dxc.gestao.venda.visao.componentes.CampoDeTexto" name="campoDeTexto1">
+        <Component class="com.dxc.gestao.venda.visao.componentes.CampoDeTexto" name="campoDeTextoBuscarPeloId">
           <Properties>
             <Property name="dica" type="java.lang.String" value="Busca produto pelo ID"/>
             <Property name="prefixoIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -186,11 +186,17 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="com.dxc.gestao.venda.visao.componentes.ComboBox" name="comboBox1">
+        <Component class="com.dxc.gestao.venda.visao.componentes.ComboBox" name="comboBoxProduto">
+          <Properties>
+            <Property name="actionCommand" type="java.lang.String" value="comboBoxProduto"/>
+          </Properties>
         </Component>
-        <Component class="com.dxc.gestao.venda.visao.componentes.ComboBox" name="comboBox2">
+        <Component class="com.dxc.gestao.venda.visao.componentes.ComboBox" name="comboBoxCategoria">
+          <Properties>
+            <Property name="actionCommand" type="java.lang.String" value="comboBoxCategoria"/>
+          </Properties>
         </Component>
-        <Component class="com.dxc.gestao.venda.visao.componentes.CampoDeTexto" name="campoDeTexto2">
+        <Component class="com.dxc.gestao.venda.visao.componentes.CampoDeTexto" name="campoDeTextoQuantidade">
           <Properties>
             <Property name="dica" type="java.lang.String" value="Quantidade"/>
             <Property name="prefixoIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -198,7 +204,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="com.dxc.gestao.venda.visao.componentes.CampoDeTexto" name="campoDeTexto3">
+        <Component class="com.dxc.gestao.venda.visao.componentes.CampoDeTexto" name="campoDeTextoDesconto">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="dica" type="java.lang.String" value="Desconto"/>
@@ -207,7 +213,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="com.dxc.gestao.venda.visao.componentes.CampoDeTexto" name="campoDeTexto4">
+        <Component class="com.dxc.gestao.venda.visao.componentes.CampoDeTexto" name="campoDeTextoValorPago">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="dica" type="java.lang.String" value="Valor pago "/>
@@ -216,7 +222,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="com.dxc.gestao.venda.visao.componentes.CampoDeTexto" name="campoDeTexto5">
+        <Component class="com.dxc.gestao.venda.visao.componentes.CampoDeTexto" name="campoDeTextoClienteCPF">
           <Properties>
             <Property name="dica" type="java.lang.String" value="CPF do cliente"/>
             <Property name="prefixoIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -245,13 +251,13 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Adiciona"/>
-                <Property name="actionCommand" type="java.lang.String" value="carinho"/>
+                <Property name="actionCommand" type="java.lang.String" value="carrinho"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="com.dxc.gestao.venda.visao.componentes.Botao" name="botao2">
+            <Component class="com.dxc.gestao.venda.visao.componentes.Botao" name="botaoVender">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e0" green="b5" red="1c" type="rgb"/>
@@ -265,7 +271,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="com.dxc.gestao.venda.visao.componentes.Botao" name="botao3">
+            <Component class="com.dxc.gestao.venda.visao.componentes.Botao" name="botaoLimpa">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="e0" green="b5" red="1c" type="rgb"/>
@@ -306,13 +312,10 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
+                          <Component id="labelProdutoNome" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel8" max="32767" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel8" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
@@ -320,8 +323,8 @@
                               </Group>
                               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabel15" max="32767" attributes="0"/>
-                                  <Component id="jLabel16" pref="106" max="32767" attributes="0"/>
+                                  <Component id="labelEstoqueQuantidade" max="32767" attributes="0"/>
+                                  <Component id="labelProdutoPreco" pref="106" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
@@ -333,10 +336,10 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel14" min="-2" pref="111" max="-2" attributes="0"/>
-                                  <Component id="jLabel17" min="-2" pref="111" max="-2" attributes="0"/>
-                                  <Component id="jLabel18" min="-2" pref="111" max="-2" attributes="0"/>
-                                  <Component id="jLabel19" min="-2" pref="111" max="-2" attributes="0"/>
+                                  <Component id="labelVendaTotal" min="-2" pref="111" max="-2" attributes="0"/>
+                                  <Component id="labelVendaValorPago" min="-2" pref="111" max="-2" attributes="0"/>
+                                  <Component id="labelVendaDesconto" min="-2" pref="111" max="-2" attributes="0"/>
+                                  <Component id="labelVendaTroco" min="-2" pref="111" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -348,36 +351,36 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelProdutoNome" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelEstoqueQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelProdutoPreco" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelVendaTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelVendaValorPago" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelVendaDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelVendaTroco" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -385,7 +388,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel7">
+            <Component class="javax.swing.JLabel" name="labelProdutoNome">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -462,7 +465,7 @@
                 <Property name="text" type="java.lang.String" value="Troco:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel14">
+            <Component class="javax.swing.JLabel" name="labelVendaTotal">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -473,7 +476,7 @@
                 <Property name="text" type="java.lang.String" value="0.00"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel15">
+            <Component class="javax.swing.JLabel" name="labelEstoqueQuantidade">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -484,7 +487,7 @@
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel16">
+            <Component class="javax.swing.JLabel" name="labelProdutoPreco">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -495,7 +498,7 @@
                 <Property name="text" type="java.lang.String" value="0.00"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel17">
+            <Component class="javax.swing.JLabel" name="labelVendaValorPago">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -506,7 +509,7 @@
                 <Property name="text" type="java.lang.String" value="0.00"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel18">
+            <Component class="javax.swing.JLabel" name="labelVendaDesconto">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -517,7 +520,7 @@
                 <Property name="text" type="java.lang.String" value="0.00"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel19">
+            <Component class="javax.swing.JLabel" name="labelVendaTroco">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -569,7 +572,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="com.dxc.gestao.venda.visao.componentes.Tabela" name="tabela1">
+            <Component class="com.dxc.gestao.venda.visao.componentes.Tabela" name="tabelaCarrinho">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">
@@ -602,12 +605,12 @@
             <Property name="rows" type="int" value="1"/>
           </Layout>
           <SubComponents>
-            <Component class="com.dxc.gestao.venda.visao.componentes.Botao" name="botao4">
+            <Component class="com.dxc.gestao.venda.visao.componentes.Botao" name="botaoCarrinhoRemover">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Remover"/>
               </Properties>
             </Component>
-            <Component class="com.dxc.gestao.venda.visao.componentes.Botao" name="botao5">
+            <Component class="com.dxc.gestao.venda.visao.componentes.Botao" name="botaoCarrinhoLimpar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Limpar"/>
               </Properties>
@@ -616,8 +619,6 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="com.dxc.gestao.venda.visao.componentes.Mensagem" name="mensagem1">
-    </Component>
   </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -824,7 +825,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="com.dxc.gestao.venda.visao.componentes.Tabela" name="tabelaUsuario">
+            <Component class="com.dxc.gestao.venda.visao.componentes.Tabela" name="tabelaVenda">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="0">

@@ -258,6 +258,8 @@ public class FormularioUsuario extends javax.swing.JPanel {
         lista.add(checkPermissaoVendaSalva);
         lista.add(checkPermissaoVendaAtualiza);
         lista.add(checkPermissaoVendaRemove);
+        lista.add(checkPermissaoEstoqueHistoricoTodo);
+        lista.add(checkPermissaoEstoqueSomente);
         
         return lista;
     }

@@ -5,6 +5,7 @@ import com.dxc.gestao.venda.modelo.entidade.Categoria;
 import com.dxc.gestao.venda.modelo.entidade.Produto;
 import com.dxc.gestao.venda.modelo.repositorio.CrudRepositorio;
 import com.dxc.gestao.venda.modelo.repositorio.impl.CrudRepositorioImpl;
+import com.dxc.gestao.venda.modelo.repositorio.impl.ProdutoRepositorioImpl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +13,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ProdutoServico {
-    private CrudRepositorio produtoRepositorio;
+    private ProdutoRepositorioImpl produtoRepositorio;
     private CrudRepositorio categoriaRepositorio;
 
     public ProdutoServico() {
-        produtoRepositorio = new CrudRepositorioImpl(Produto.class){};
+        produtoRepositorio = new ProdutoRepositorioImpl();
         categoriaRepositorio = new CrudRepositorioImpl(Categoria.class) {};
     }
     
@@ -97,11 +98,15 @@ public class ProdutoServico {
         map.put("nome", nome);
         
         List<Produto> lista = produtoRepositorio.encontrarPeloAtributoUsandoAND(map, false);
-        
+        System.out.println("LISTA: " + lista);
         if (lista.size() != 1)
             return null;
 //            throw new RuntimeException("Erro ao buscar somente um produto");
         
        return lista.get(0);
+    }
+    
+    public List<Produto> encontraTodosPelaCategoriaNome(String categoriaNome) {
+        return produtoRepositorio.encontraTodosPelaCategoriaNome(categoriaNome);
     }
 }

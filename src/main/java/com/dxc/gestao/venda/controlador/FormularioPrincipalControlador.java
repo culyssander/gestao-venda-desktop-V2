@@ -25,8 +25,9 @@ public final class FormularioPrincipalControlador {
         produtoServico = new ProdutoServico();
         produtoModelo = new ProdutoModelo(produtoServico.encontrarTodos());
         estoqueServico = new EstoqueServico();
-        estoqueHistoricoServico = new EstoqueHistoricoServico();
-        estoqueHistoricoModelo = new EstoqueHistoricoModelo(estoqueHistoricoServico.encontraTodos(formularioPrincipal.getUsuarioId()));        
+        System.out.println("CONTROLER PRINCIPAL USUARIO ID: " + formularioPrincipal.getUsuarioId());
+        estoqueHistoricoServico = new EstoqueHistoricoServico(formularioPrincipal.getUsuarioId());
+        estoqueHistoricoModelo = new EstoqueHistoricoModelo(estoqueHistoricoServico.encontraTodos());        
         actualiza();
         evento();
     }

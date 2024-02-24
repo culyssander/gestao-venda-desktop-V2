@@ -1,6 +1,7 @@
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\tabela\modelo\UsuarioModelo.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\Venda.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\Botao.java
+C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\tabela\modelo\VendaItemModelo.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\formulario\FormularioProduto.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\formulario\Login.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\Mensagem.java
@@ -45,6 +46,7 @@ C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\PermissaoUsuario.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\servico\ProdutoServico.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\formulario\FormularioInfo.java
+C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\dto\VendaItemDto.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\ModernScrollBarUI.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\dto\ProdutoDto.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\Pesquisar.java
@@ -56,6 +58,7 @@ C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\entidade\Permissao.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\tabela\modelo\EstoqueHistoricoModelo.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\BotaoContorno.java
+C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\modelo\repositorio\impl\ProdutoRepositorioImpl.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\evento\EventoMenuSelectionado.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\componentes\ImageAvatar.java
 C:\Users\qculissander\netbeans-desktop\gestao-venda\src\main\java\com\dxc\gestao\venda\visao\formulario\FormularioVenda.java

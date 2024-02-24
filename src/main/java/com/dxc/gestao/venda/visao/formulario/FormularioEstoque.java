@@ -32,9 +32,9 @@ public class FormularioEstoque extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBar(new BarraDeRolar());
         this.usuarioId = usuarioId;
         
-        formularioEstoqueControlador = new FormularioEstoqueControlador(this);
         this.cabecalho = cabecalho;
         this.formularioPrincipal = formularioPrincipal;
+        formularioEstoqueControlador = new FormularioEstoqueControlador(this);
         
         this.layout = new MigLayout("fill, insets");
         background.setLayout(layout);

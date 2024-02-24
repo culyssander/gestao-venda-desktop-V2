@@ -28,6 +28,9 @@ public class Cartao extends javax.swing.JPanel {
         labelCartaoValor.setText(cartaoModelo.getValor());
     }
 
+    public JLabel getLabelCartaoValor() {
+        return labelCartaoValor;
+    }
 
     @Override
     protected void paintComponent(Graphics g) {

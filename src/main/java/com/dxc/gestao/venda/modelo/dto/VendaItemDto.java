@@ -1,4 +1,4 @@
-package com.dxc.gestao.venda.modelo.entidade;
+package com.dxc.gestao.venda.modelo.dto;
 
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
@@ -6,15 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Builder
-public class VendaItem {
-    private Long id;
-    private Long produtoId;
+public class VendaItemDto {
+    private String produtoNome;
+    private BigDecimal preco;
     private Integer quantidade;
     private BigDecimal desconto;
     private BigDecimal total;
-    private Long vendaId;
 }

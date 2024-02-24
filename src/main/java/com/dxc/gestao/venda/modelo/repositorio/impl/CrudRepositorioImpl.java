@@ -143,7 +143,7 @@ public abstract class CrudRepositorioImpl<T extends Object> implements CrudRepos
         return list;
     }
 
-    private T getT(ResultSet result, Class<T> t) {
+    public T getT(ResultSet result, Class<T> t) {
         try {
             Set<Field> fields = ReflectionUtils.getAllFields(t, e -> true);
             Method method = null;

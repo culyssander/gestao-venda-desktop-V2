@@ -54,6 +54,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
     
     private void inicializaFormulario(Long usuarioId, Cabecalho cabecalho, Dashboard dashboard) {
+        System.out.println("DASHBOARD: " + usuarioId);
         formularioPrincipal = new FormularioPrincipal(usuarioId, cabecalho);
         formularioProduto = new FormularioProduto(usuarioId, cabecalho, dashboard);
         formularioEstoque = new FormularioEstoque(usuarioId, cabecalho, formularioPrincipal);

@@ -26,13 +26,15 @@ public class FormularioPrincipal extends javax.swing.JPanel {
     public FormularioPrincipal(Long usuarioId, Cabecalho cabecalho) {
         initComponents();
         setOpaque(false);
+        System.out.println("FORMULARIO PRINCIPAL: " + usuarioId);
         
         jScrollPane1.getViewport().setBackground(Color.WHITE);
         jScrollPane1.setVerticalScrollBar(new BarraDeRolar());
-        controlador = new FormularioPrincipalControlador(this);
-        inicializarCartao();
         this.usuarioId = usuarioId;
         this.cabecalho = cabecalho;
+        controlador = new FormularioPrincipalControlador(this);
+        inicializarCartao();
+        
         evento();
     }
 
