@@ -69,6 +69,10 @@ public class FormularioEstoque extends javax.swing.JPanel {
         cabecalho.getPesquisar().addKeyListener(formularioEstoqueControlador);
         campoDeTextoNome.addKeyListener(formularioEstoqueControlador);
     }
+    
+    private void eventoCliqueNoRato() {
+        tabelaEstoque.addMouseListener(formularioEstoqueControlador);
+    }
 
     private void evento() {
         botaoAdicionar.addActionListener(formularioEstoqueControlador);

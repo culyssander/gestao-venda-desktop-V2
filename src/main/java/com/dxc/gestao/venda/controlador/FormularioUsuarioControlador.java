@@ -6,7 +6,6 @@ import com.dxc.gestao.venda.modelo.entidade.Usuario;
 import com.dxc.gestao.venda.modelo.servico.PermissaoServico;
 import com.dxc.gestao.venda.modelo.servico.UsuarioServico;
 import com.dxc.gestao.venda.modelo.tabela.modelo.UsuarioModelo;
-import com.dxc.gestao.venda.visao.componentes.Cabecalho;
 import com.dxc.gestao.venda.visao.formulario.FormularioUsuario;
 import java.awt.Color;
 import java.awt.event.ActionEvent;

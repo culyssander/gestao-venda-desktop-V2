@@ -20,8 +20,10 @@ public class FormularioPrincipal extends javax.swing.JPanel {
     private String totalEstoque;
     private String totalVenda;
     private FormularioPrincipalControlador controlador;
+    private Long usuarioId;
+    private Cabecalho cabecalho;
 
-    public FormularioPrincipal() {
+    public FormularioPrincipal(Long usuarioId, Cabecalho cabecalho) {
         initComponents();
         setOpaque(false);
         
@@ -29,6 +31,8 @@ public class FormularioPrincipal extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBar(new BarraDeRolar());
         controlador = new FormularioPrincipalControlador(this);
         inicializarCartao();
+        this.usuarioId = usuarioId;
+        this.cabecalho = cabecalho;
         evento();
     }
 
@@ -87,8 +91,15 @@ public class FormularioPrincipal extends javax.swing.JPanel {
             }
         });
     }
-    
 
+    public Cabecalho getCabecalho() {
+        return cabecalho;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+    
     public void setTotalEstoque(String totalEstoque) {
         this.totalEstoque = totalEstoque;
     }

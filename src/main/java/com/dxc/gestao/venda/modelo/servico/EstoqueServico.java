@@ -47,4 +47,16 @@ public class EstoqueServico {
         }
         return "erro ao salvar estoque";
     }
+
+    public String remover(Long estoqueId) {
+        try {
+            boolean resultado = estoqueRepositorio.removerPeloId(estoqueId);
+            
+            if (resultado)
+                return "Estoque removido com sucesso";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        return "Error ao remover estoque";
+    }
 }

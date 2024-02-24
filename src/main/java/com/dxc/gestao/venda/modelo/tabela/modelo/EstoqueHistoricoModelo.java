@@ -7,10 +7,10 @@ import javax.swing.table.AbstractTableModel;
 
 public class EstoqueHistoricoModelo extends AbstractTableModel {
     
-    private List<HistoricoEstoqueDto> estoqueHistoricos;
+    private List<EstoqueHistorico> estoqueHistoricos;
     private final String [] colunas = {"ID", "Nome", "Quantidade", "Estado", "Motivo", "Data"};
     
-    public EstoqueHistoricoModelo (List<HistoricoEstoqueDto> estoqueHistoricos) {
+    public EstoqueHistoricoModelo (List<EstoqueHistorico> estoqueHistoricos) {
         this.estoqueHistoricos = estoqueHistoricos;
     }
 
@@ -26,11 +26,11 @@ public class EstoqueHistoricoModelo extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        HistoricoEstoqueDto historico = estoqueHistoricos.get(rowIndex);
+        EstoqueHistorico historico = estoqueHistoricos.get(rowIndex);
         
         switch (columnIndex) {
-            case 0 -> {return historico.getProduto().getId();}
-            case 1 -> { return historico.getProduto().getNome();}
+            case 0 -> {return historico.getId();}
+            case 1 -> { return historico.getProduto();}
             case 2 -> {return historico.getQuantidade();}
             case 3 -> {return historico.getTipo();}
             case 4 -> {return historico.getObservacao();}
@@ -50,11 +50,11 @@ public class EstoqueHistoricoModelo extends AbstractTableModel {
         return false; 
     }
 
-    public List<HistoricoEstoqueDto> getEstoqueHistoricos() {
+    public List<EstoqueHistorico> getEstoqueHistoricos() {
         return estoqueHistoricos;
     }
 
-    public void setEstoqueHistoricos(List<HistoricoEstoqueDto> estoqueHistoricos) {
+    public void setEstoqueHistoricos(List<EstoqueHistorico> estoqueHistoricos) {
         this.estoqueHistoricos = estoqueHistoricos;
     }
     

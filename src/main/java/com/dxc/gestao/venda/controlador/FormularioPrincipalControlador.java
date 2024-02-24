@@ -26,12 +26,13 @@ public final class FormularioPrincipalControlador {
         produtoModelo = new ProdutoModelo(produtoServico.encontrarTodos());
         estoqueServico = new EstoqueServico();
         estoqueHistoricoServico = new EstoqueHistoricoServico();
-        estoqueHistoricoModelo = new EstoqueHistoricoModelo(estoqueHistoricoServico.encontraTodos());        
+        estoqueHistoricoModelo = new EstoqueHistoricoModelo(estoqueHistoricoServico.encontraTodos(formularioPrincipal.getUsuarioId()));        
         actualiza();
         evento();
     }
     
     public void actualiza() {
+        System.out.println(estoqueHistoricoModelo.getEstoqueHistoricos());
         String totalProduto = String.format("Total %s", produtoServico.quantidadeDeProduto());
         String totalEstoque = String.format("Total %s", estoqueServico.quantidadeDeEstoque());
         this.formularioPrincipal.setTotalProduto(totalProduto);

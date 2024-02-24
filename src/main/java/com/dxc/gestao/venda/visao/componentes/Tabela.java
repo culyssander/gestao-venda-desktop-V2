@@ -33,22 +33,12 @@ public class Tabela extends JTable {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 
                 if (value != null) {
-                   if (value.toString().equals("ENTRADA")) {
-                    var label = new JLabel();
-                    label.setOpaque(false);
-                    label.setText(String.valueOf(value));
-                    label.setFont(new Font("sansserif", 5, 13));
-                    label.setForeground(new Color(147, 249, 185));
-                    return label;
-                  }
-                  
-                   if (value.toString().equals("REMOVER")) {
-                       BotaoContorno botao = new BotaoContorno();
-                       botao.setText("Remover");
-                       botao.setForeground(new Color(204,0,0));
-                       botao.setBackground(new Color(204,0,0));
-                       return botao;
-                   }
+                    
+                    switch(value.toString()) {
+                        case "ENTRADA" -> {return label(value.toString(), Color.decode("#17F53C"));}
+                        case "SAIDA" -> {return label(value.toString(), Color.decode("#F71A0F")); }
+                        case "REMOVER" -> { return botao("Remover");}
+                    }
                 }
                 
 //                if(column != 3) {
@@ -69,6 +59,22 @@ public class Tabela extends JTable {
             
         });
     }
+
+    public JLabel label(String texto, Color color) {
+        var label = new JLabel();
+        label.setOpaque(false);
+        label.setText(texto);
+        label.setFont(new Font("sansserif", 5, 13));
+        label.setForeground(color);
+        return label;
+    }
     
-    
+    public JButton botao(String texto) {
+        BotaoContorno botao = new BotaoContorno();
+        botao.setText(texto);
+        botao.setForeground(new Color(204, 0, 0));
+        botao.setBackground(new Color(204, 0, 0));
+        return botao;
+    }
+
 }
