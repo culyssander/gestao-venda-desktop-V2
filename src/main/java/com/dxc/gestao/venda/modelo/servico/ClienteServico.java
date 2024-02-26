@@ -45,12 +45,25 @@ public class ClienteServico {
         
         return "Erro ao remover cliente";
     }
+    
+    public Cliente encontrarClientePeloAtributoCPF(String texto) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("cpf", texto);
+        
+        List<Cliente> cliente = clienteRepositorio.encontrarPeloAtributoUsandoAND(map, false);
+        
+        if (cliente.size() != 1) {
+            return null;
+        }
+        
+        return cliente.get(0);
+    }
         
     
     public List<Cliente> encontrarClientePeloAtributo(String texto) {
         Map<String, Object> map = new HashMap<>();
         map.put("nome", texto);
-        map.put("telefone", texto);
+        map.put("cpf", texto);
         map.put("morada", texto);
         
         return clienteRepositorio.encontrarPeloAtributoUsandoOR(map, true);

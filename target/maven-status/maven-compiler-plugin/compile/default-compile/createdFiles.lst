@@ -14,6 +14,7 @@ com\dxc\gestao\venda\visao\formulario\FormularioVenda$1.class
 com\dxc\gestao\venda\visao\formulario\FormularioUsuario$14.class
 com\dxc\gestao\venda\visao\formulario\FormularioPrincipal.class
 com\dxc\gestao\venda\modelo\servico\ClienteServico.class
+com\dxc\gestao\venda\modelo\util\ValidaCPForCNPJ.class
 com\dxc\gestao\venda\modelo\dto\EstoqueDto$EstoqueDtoBuilder.class
 com\dxc\gestao\venda\visao\formulario\FormularioPrincipal$1.class
 com\dxc\gestao\venda\modelo\entidade\Estoque.class
@@ -52,9 +53,13 @@ com\dxc\gestao\venda\visao\componentes\Tabela$2.class
 com\dxc\gestao\venda\visao\formulario\FormularioUsuario$4.class
 com\dxc\gestao\venda\visao\formulario\FormularioPrincipal$4.class
 com\dxc\gestao\venda\modelo\servico\LoginServico$1.class
+com\dxc\gestao\venda\modelo\tabela\modelo\VendaModelo.class
 com\dxc\gestao\venda\visao\formulario\Login$2.class
+com\dxc\gestao\venda\modelo\dto\VendaResponseDto$VendaResponseDtoBuilder.class
 com\dxc\gestao\venda\controlador\FormularioEstoqueControlador.class
 com\dxc\gestao\venda\modelo\servico\ClienteServico$1.class
+com\dxc\gestao\venda\modelo\dto\VendaRequestDto$VendaRequestDtoBuilder.class
+com\dxc\gestao\venda\modelo\entidade\Venda$VendaBuilder.class
 com\dxc\gestao\venda\modelo\entidade\Produto.class
 com\dxc\gestao\venda\modelo\tabela\modelo\ClienteModelo.class
 com\dxc\gestao\venda\visao\formulario\FormularioUsuario$3.class
@@ -75,11 +80,13 @@ com\dxc\gestao\venda\visao\formulario\FormularioCliente.class
 com\dxc\gestao\venda\visao\formulario\Dashboard$1.class
 com\dxc\gestao\venda\visao\formulario\FormularioInfo.class
 com\dxc\gestao\venda\controlador\FormularioPrincipalControlador$1.class
+com\dxc\gestao\venda\modelo\dto\VendaRequestDto.class
 com\dxc\gestao\venda\visao\formulario\Login$1.class
 com\dxc\gestao\venda\modelo\servico\PermissaoServico$2.class
 com\dxc\gestao\venda\modelo\servico\LoginServico.class
 com\dxc\gestao\venda\visao\componentes\CampoDeTexto.class
 com\dxc\gestao\venda\visao\evento\EventoMenuSelectionado.class
+com\dxc\gestao\venda\modelo\repositorio\impl\VendaItemRepositorioImpl.class
 com\dxc\gestao\venda\visao\componentes\Pesquisar.class
 com\dxc\gestao\venda\visao\util\MensagemUtil.class
 com\dxc\gestao\venda\modelo\dto\LoginResponse.class
@@ -88,6 +95,7 @@ com\dxc\gestao\venda\visao\modelo\MenuModelo$MenuModeloBuilder.class
 com\dxc\gestao\venda\visao\formulario\Login$7.class
 com\dxc\gestao\venda\modelo\conexao\ConexaoMySQL.class
 com\dxc\gestao\venda\visao\componentes\ListaMenu$2.class
+com\dxc\gestao\venda\modelo\repositorio\impl\VendaRepositorioImpl.class
 com\dxc\gestao\venda\visao\componentes\MenuItem.class
 com\dxc\gestao\venda\modelo\dto\ProdutoDto.class
 com\dxc\gestao\venda\visao\componentes\Cartao.class
@@ -155,6 +163,7 @@ com\dxc\gestao\venda\visao\formulario\FormularioInfo$1.class
 com\dxc\gestao\venda\visao\formulario\FormularioInfoProdutoCategoria.class
 com\dxc\gestao\venda\visao\componentes\BarraDeRolar.class
 com\dxc\gestao\venda\visao\formulario\FormularioVenda$3.class
+com\dxc\gestao\venda\modelo\dto\VendaResponseDto.class
 com\dxc\gestao\venda\controlador\DashboardControlador.class
 com\dxc\gestao\venda\modelo\servico\EstoqueHistoricoServico.class
 com\dxc\gestao\venda\visao\componentes\PanelLoading.class

@@ -20,6 +20,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
@@ -28,6 +29,8 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 public class FormularioVenda extends javax.swing.JPanel {
     
     private final FormularioVendaControlador formularioVendaControlador;
+    private FormularioPrincipal formularioPrincipal;
+    private FormularioEstoque formularioEstoque;
     private int menuSelectionadoIndex = -1;
     private boolean mostrar = true;
     private Cabecalho cabecalho;
@@ -35,7 +38,8 @@ public class FormularioVenda extends javax.swing.JPanel {
     private Long usuarioId;
     private MensagemUtil mensagem;
 
-    public FormularioVenda(Long usuarioId, Cabecalho cabecalho) {
+    public FormularioVenda(Long usuarioId, Cabecalho cabecalho, 
+            FormularioPrincipal formularioPrincipal, FormularioEstoque formularioEstoque) {
         initComponents();
         setOpaque(false);
         
@@ -52,6 +56,10 @@ public class FormularioVenda extends javax.swing.JPanel {
         this.mensagem = new MensagemUtil(background, layout);
         evento();
         eventoDoTeclado();
+        
+        jScrollPane3.getViewport().setBackground(new Color(0,0,66));
+        jScrollPane3.setVerticalScrollBar(new BarraDeRolar());
+        jScrollPane3.setHorizontalScrollBar(new BarraDeRolar());               
     }
 
     public MensagemUtil getMensagem() {
@@ -109,13 +117,14 @@ public class FormularioVenda extends javax.swing.JPanel {
         campoDeTextoBuscarPeloId.addKeyListener(formularioVendaControlador);
         campoDeTextoQuantidade.addKeyListener(formularioVendaControlador);
         campoDeTextoDesconto.addKeyListener(formularioVendaControlador);
+        tabelaCarrinho.addMouseListener(formularioVendaControlador);
     }
 
     private void evento() {
         botaoAdicionar.addActionListener(formularioVendaControlador);
         botaoAtualizar.addActionListener(formularioVendaControlador);
         botaoImprimir.addActionListener(formularioVendaControlador);
-        botaoPermissao.addActionListener(formularioVendaControlador);
+        botaoDetalhes.addActionListener(formularioVendaControlador);
         botaoRemover.addActionListener(formularioVendaControlador);
         botaoAdicionarNoCarrinho.addActionListener(formularioVendaControlador);
         botaoCarrinhoLimpar.addActionListener(formularioVendaControlador);
@@ -172,6 +181,14 @@ public class FormularioVenda extends javax.swing.JPanel {
         
     }
 
+    public FormularioPrincipal getFormularioPrincipal() {
+        return formularioPrincipal;
+    }
+
+    public FormularioEstoque getFormularioEstoque() {
+        return formularioEstoque;
+    }
+        
     public Long getUsuarioId() {
         return usuarioId;
     }
@@ -201,7 +218,7 @@ public class FormularioVenda extends javax.swing.JPanel {
     }
 
     public JButton getBotaoDetalhe() {
-        return botaoPermissao;
+        return botaoDetalhes;
     }
 
     public JButton getBotaoRemover() {
@@ -277,7 +294,7 @@ public class FormularioVenda extends javax.swing.JPanel {
     }
 
     public JButton getBotaoPermissao() {
-        return botaoPermissao;
+        return botaoDetalhes;
     }
 
     public Botao getBotaoVender() {
@@ -291,6 +308,43 @@ public class FormularioVenda extends javax.swing.JPanel {
     public ComboBox getComboBoxProduto() {
         return comboBoxProduto;
     }
+
+    public JDialog getDialogDetalhes() {
+        return dialogDetalhes;
+    }
+
+    public JLabel getLabelDetalheTotal() {
+        return labelDetalheTotal;
+    }
+
+    public JLabel getLabelDetalhesAtendente() {
+        return labelDetalhesAtendente;
+    }
+
+    public JLabel getLabelDetalhesCliente() {
+        return labelDetalhesCliente;
+    }
+
+    public JLabel getLabelDetalhesData() {
+        return labelDetalhesData;
+    }
+
+    public JLabel getLabelDetalhesTroco() {
+        return labelDetalhesTroco;
+    }
+
+    public JLabel getLabelDetalhesValorPago() {
+        return labelDetalhesValorPago;
+    }
+
+    public JLabel getLabelDetalhesVendaId() {
+        return labelDetalhesVendaId;
+    }
+
+    public JList<String> getListaDetalhesVenda() {
+        return listaDetalhesVenda;
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -335,12 +389,29 @@ public class FormularioVenda extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         botaoCarrinhoRemover = new com.dxc.gestao.venda.visao.componentes.Botao();
         botaoCarrinhoLimpar = new com.dxc.gestao.venda.visao.componentes.Botao();
+        dialogDetalhes = new javax.swing.JDialog();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        labelDetalhesVendaId = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        labelDetalhesCliente = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        labelDetalheTotal = new javax.swing.JLabel();
+        labelDetalhesValorPago = new javax.swing.JLabel();
+        labelDetalhesTroco = new javax.swing.JLabel();
+        labelDetalhesAtendente = new javax.swing.JLabel();
+        labelDetalhesData = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaDetalhesVenda = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         botaoAdicionar = new javax.swing.JButton();
         botaoAtualizar = new javax.swing.JButton();
         botaoRemover = new javax.swing.JButton();
-        botaoPermissao = new javax.swing.JButton();
+        botaoDetalhes = new javax.swing.JButton();
         botaoImprimir = new javax.swing.JButton();
         panelBoard1 = new com.dxc.gestao.venda.visao.componentes.PanelBoard();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -653,9 +724,11 @@ public class FormularioVenda extends javax.swing.JPanel {
         jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         botaoCarrinhoRemover.setText("Remover");
+        botaoCarrinhoRemover.setActionCommand("removercarrinho");
         jPanel3.add(botaoCarrinhoRemover);
 
         botaoCarrinhoLimpar.setText("Limpar");
+        botaoCarrinhoLimpar.setActionCommand("limparcarrinho");
         jPanel3.add(botaoCarrinhoLimpar);
 
         javax.swing.GroupLayout panelBoard4Layout = new javax.swing.GroupLayout(panelBoard4);
@@ -679,6 +752,135 @@ public class FormularioVenda extends javax.swing.JPanel {
                 .addGap(27, 27, 27)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(0, 0, 66));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\logo 39x45.png")); // NOI18N
+        jLabel7.setText("SOFT");
+
+        labelDetalhesVendaId.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelDetalhesVendaId.setForeground(new java.awt.Color(255, 255, 255));
+        labelDetalhesVendaId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelDetalhesVendaId.setText("Extrato No.");
+
+        jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
+
+        labelDetalhesCliente.setForeground(new java.awt.Color(255, 255, 255));
+        labelDetalhesCliente.setText("CPF/CNPJ do consumidor:");
+
+        jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
+
+        jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
+
+        labelDetalheTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelDetalheTotal.setForeground(new java.awt.Color(255, 255, 255));
+        labelDetalheTotal.setText("TOTAL R$");
+
+        labelDetalhesValorPago.setForeground(new java.awt.Color(255, 255, 255));
+        labelDetalhesValorPago.setText("Valor Pago:");
+
+        labelDetalhesTroco.setForeground(new java.awt.Color(255, 255, 255));
+        labelDetalhesTroco.setText("Troco:");
+
+        labelDetalhesAtendente.setForeground(new java.awt.Color(255, 255, 255));
+        labelDetalhesAtendente.setText("Atendente:");
+
+        labelDetalhesData.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelDetalhesData.setForeground(new java.awt.Color(255, 255, 255));
+        labelDetalhesData.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jSeparator4.setForeground(new java.awt.Color(255, 255, 255));
+
+        jSeparator5.setForeground(new java.awt.Color(255, 255, 255));
+
+        jScrollPane3.setBackground(new java.awt.Color(0, 0, 70));
+        jScrollPane3.setBorder(null);
+        jScrollPane3.setOpaque(false);
+
+        listaDetalhesVenda.setBackground(new java.awt.Color(0, 0, 70));
+        listaDetalhesVenda.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        listaDetalhesVenda.setForeground(new java.awt.Color(255, 255, 255));
+        listaDetalhesVenda.setOpaque(false);
+        jScrollPane3.setViewportView(listaDetalhesVenda);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator1)
+            .addComponent(jSeparator2)
+            .addComponent(labelDetalhesVendaId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator3)
+            .addComponent(labelDetalhesData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator4)
+            .addComponent(jSeparator5)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(labelDetalhesCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelDetalhesAtendente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelDetalhesTroco, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelDetalhesValorPago, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelDetalheTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(labelDetalhesVendaId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(labelDetalhesCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelDetalheTotal)
+                .addGap(0, 0, 0)
+                .addComponent(labelDetalhesValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(labelDetalhesTroco, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(labelDetalhesAtendente, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(labelDetalhesData, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 63, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout dialogDetalhesLayout = new javax.swing.GroupLayout(dialogDetalhes.getContentPane());
+        dialogDetalhes.getContentPane().setLayout(dialogDetalhesLayout);
+        dialogDetalhesLayout.setHorizontalGroup(
+            dialogDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogDetalhesLayout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        dialogDetalhesLayout.setVerticalGroup(
+            dialogDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogDetalhesLayout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
@@ -715,17 +917,17 @@ public class FormularioVenda extends javax.swing.JPanel {
         });
         jPanel1.add(botaoRemover);
 
-        botaoPermissao.setBackground(new java.awt.Color(0, 0, 70));
-        botaoPermissao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botaoPermissao.setForeground(new java.awt.Color(255, 255, 255));
-        botaoPermissao.setText("Detalhes");
-        botaoPermissao.setActionCommand("permissao");
-        botaoPermissao.addActionListener(new java.awt.event.ActionListener() {
+        botaoDetalhes.setBackground(new java.awt.Color(0, 0, 70));
+        botaoDetalhes.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botaoDetalhes.setForeground(new java.awt.Color(255, 255, 255));
+        botaoDetalhes.setText("Detalhes");
+        botaoDetalhes.setActionCommand("detalhes");
+        botaoDetalhes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoPermissaoActionPerformed(evt);
+                botaoDetalhesActionPerformed(evt);
             }
         });
-        jPanel1.add(botaoPermissao);
+        jPanel1.add(botaoDetalhes);
 
         botaoImprimir.setBackground(new java.awt.Color(0, 0, 70));
         botaoImprimir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -826,9 +1028,9 @@ public class FormularioVenda extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
-    private void botaoPermissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPermissaoActionPerformed
+    private void botaoDetalhesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDetalhesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botaoPermissaoActionPerformed
+    }//GEN-LAST:event_botaoDetalhesActionPerformed
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         // TODO add your handling code here:
@@ -842,9 +1044,9 @@ public class FormularioVenda extends javax.swing.JPanel {
     private javax.swing.JButton botaoAtualizar;
     private com.dxc.gestao.venda.visao.componentes.Botao botaoCarrinhoLimpar;
     private com.dxc.gestao.venda.visao.componentes.Botao botaoCarrinhoRemover;
+    private javax.swing.JButton botaoDetalhes;
     private javax.swing.JButton botaoImprimir;
     private com.dxc.gestao.venda.visao.componentes.Botao botaoLimpa;
-    private javax.swing.JButton botaoPermissao;
     private javax.swing.JButton botaoRemover;
     private com.dxc.gestao.venda.visao.componentes.Botao botaoVender;
     private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoBuscarPeloId;
@@ -854,6 +1056,7 @@ public class FormularioVenda extends javax.swing.JPanel {
     private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoValorPago;
     private com.dxc.gestao.venda.visao.componentes.ComboBox comboBoxCategoria;
     private com.dxc.gestao.venda.visao.componentes.ComboBox comboBoxProduto;
+    private javax.swing.JDialog dialogDetalhes;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JDialog jDialog1;
@@ -868,13 +1071,28 @@ public class FormularioVenda extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JLabel labelDetalheTotal;
+    private javax.swing.JLabel labelDetalhesAtendente;
+    private javax.swing.JLabel labelDetalhesCliente;
+    private javax.swing.JLabel labelDetalhesData;
+    private javax.swing.JLabel labelDetalhesTroco;
+    private javax.swing.JLabel labelDetalhesValorPago;
+    private javax.swing.JLabel labelDetalhesVendaId;
     private javax.swing.JLabel labelEstoqueQuantidade;
     private javax.swing.JLabel labelProdutoNome;
     private javax.swing.JLabel labelProdutoPreco;
@@ -882,6 +1100,7 @@ public class FormularioVenda extends javax.swing.JPanel {
     private javax.swing.JLabel labelVendaTotal;
     private javax.swing.JLabel labelVendaTroco;
     private javax.swing.JLabel labelVendaValorPago;
+    private javax.swing.JList<String> listaDetalhesVenda;
     private com.dxc.gestao.venda.visao.componentes.PanelBoard panelBoard1;
     private com.dxc.gestao.venda.visao.componentes.PanelBoard panelBoard2;
     private com.dxc.gestao.venda.visao.componentes.PanelBoard panelBoard3;

@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class VendaItem {
-    private Long id;
     private Long produtoId;
     private Integer quantidade;
     private BigDecimal desconto;

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class VendaItemDto {
+    private Long produtoId;
     private String produtoNome;
     private BigDecimal preco;
     private Integer quantidade;

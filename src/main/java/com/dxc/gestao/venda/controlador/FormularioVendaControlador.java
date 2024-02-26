@@ -1,44 +1,86 @@
 package com.dxc.gestao.venda.controlador;
 
 import com.dxc.gestao.venda.modelo.dto.VendaItemDto;
+import com.dxc.gestao.venda.modelo.dto.VendaRequestDto;
+import com.dxc.gestao.venda.modelo.dto.VendaResponseDto;
+import com.dxc.gestao.venda.modelo.entidade.Cliente;
 import com.dxc.gestao.venda.modelo.entidade.Estoque;
+import com.dxc.gestao.venda.modelo.entidade.EstoqueHistorico;
+import com.dxc.gestao.venda.modelo.entidade.EstoqueTipo;
 import com.dxc.gestao.venda.modelo.entidade.Produto;
+import com.dxc.gestao.venda.modelo.entidade.Venda;
 import com.dxc.gestao.venda.modelo.entidade.VendaItem;
+import com.dxc.gestao.venda.modelo.repositorio.impl.VendaItemRepositorioImpl;
+import com.dxc.gestao.venda.modelo.repositorio.impl.VendaRepositorioImpl;
 import com.dxc.gestao.venda.modelo.servico.CategoriaServico;
+import com.dxc.gestao.venda.modelo.servico.ClienteServico;
+import com.dxc.gestao.venda.modelo.servico.EstoqueHistoricoServico;
 import com.dxc.gestao.venda.modelo.servico.EstoqueServico;
 import com.dxc.gestao.venda.modelo.servico.ProdutoServico;
+import com.dxc.gestao.venda.modelo.tabela.modelo.EstoqueHistoricoModelo;
+import com.dxc.gestao.venda.modelo.tabela.modelo.EstoqueModelo;
 import com.dxc.gestao.venda.modelo.tabela.modelo.VendaItemModelo;
+import com.dxc.gestao.venda.modelo.tabela.modelo.VendaModelo;
+import com.dxc.gestao.venda.modelo.util.ValidaCPForCNPJ;
 import com.dxc.gestao.venda.visao.componentes.Mensagem;
 import com.dxc.gestao.venda.visao.formulario.FormularioVenda;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 
-public class FormularioVendaControlador implements ActionListener, KeyListener {
+public class FormularioVendaControlador implements ActionListener, KeyListener, MouseListener {
     
     private final FormularioVenda formularioVenda;
     private final EstoqueServico estoqueServico;
     private final ProdutoServico produtoServico;
     private final CategoriaServico categoriaServico;
+    private final ClienteServico clienteServico;
+    private final EstoqueHistoricoServico estoqueHistoricoServico;
+    private final VendaRepositorioImpl vendaRepositorio;
+    private final VendaItemRepositorioImpl vendaItemRepositorio;
     private VendaItemModelo vendaItemModelo;
+    private VendaModelo vendaModelo;
     private static Estoque estoque;
+    private static Long vendaId;
     private static Optional<Produto> produto;
     private static Map<String, VendaItemDto> vendaItemDtosCarrinho;
+    private static Map<String, Estoque> estoqueAtualiza;
+    private static List<VendaResponseDto> vendaResponseDtos;
+   
 
     public FormularioVendaControlador(FormularioVenda formularioVenda) {
         this.formularioVenda = formularioVenda;
         estoqueServico = new EstoqueServico();
         produtoServico = new ProdutoServico();
         categoriaServico = new CategoriaServico();
+        clienteServico = new ClienteServico();
+        estoqueHistoricoServico = new EstoqueHistoricoServico(formularioVenda.getUsuarioId());
+        vendaRepositorio = new VendaRepositorioImpl();
+        vendaItemRepositorio = new VendaItemRepositorioImpl();
         vendaItemDtosCarrinho = new HashMap<>();
+        estoqueAtualiza = new HashMap<>();
         preencherComboBoxCategoria();
+        atualizaTabelaVenda();
+    }
+    
+    private void atualizaTabelaVenda() {
+        vendaResponseDtos = vendaRepositorio.encontrarTodosPersonalizado();
+        vendaModelo = new VendaModelo(vendaResponseDtos);
+        formularioVenda.getTabela().setModel(vendaModelo);
     }
     
     private void adicionar() {
@@ -53,9 +95,16 @@ public class FormularioVendaControlador implements ActionListener, KeyListener {
         System.out.println("ACTION: " + action);
         switch(action) {
             case "adicionar" -> {adicionar();}
+            case "atualizar" -> {atualizarVenda();}
             case "comboboxproduto" -> { selecionaProdutoNoComboBox();}
             case "comboboxcategoria" -> { preencherComboBoxProduto();}
             case "carrinho" -> { adicionaNoCarrinho();}
+            case "removercarrinho" -> { removerProdutoNoCarrinho();}
+            case "limparcarrinho" -> { limpaCarrinho(); }
+            case "limpa" -> {limpezaGeral();}
+            case "vender" -> {vender();}
+            case "detalhes" -> { mostrarDetalhes();}
+            
         }
     }
 
@@ -95,16 +144,7 @@ public class FormularioVendaControlador implements ActionListener, KeyListener {
         }
         
         String descontoString = formularioVenda.getCampoDeTextoDesconto().getText().trim();
-        
-        try {
-            if (!descontoString.isBlank()) {
-                Double.valueOf(descontoString);
-            }
-        } catch (NumberFormatException ex) {
-            formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, "Desconto invalida");
-            throw new RuntimeException(ex);
-        }
-        
+        validaSeValorInsiridoENumero(descontoString);        
     }
     
     private Optional<Produto> buscarProdutoPeloId(Long produtoId) {
@@ -180,13 +220,14 @@ public class FormularioVendaControlador implements ActionListener, KeyListener {
     private void adicionaNoCarrinho() {
         if (estoque.getEstado() && estoque.getQuantidade() > 0) {
             int quantidadeExiste = 0;
+            
             BigDecimal desconto = BigDecimal.ZERO;
             BigDecimal preco = BigDecimal.ZERO;
             BigDecimal total = BigDecimal.ZERO;
             
             String quantidadeString = formularioVenda.getCampoDeTextoQuantidade().getText().trim();
             String descontoString = formularioVenda.getCampoDeTextoDesconto().getText().trim();
-            validaCampo(quantidadeString);
+            validaCampo(quantidadeString, "quantidade");
             
             if (produto.isPresent()) {
                 Produto produtoAtual = produto.get();
@@ -195,47 +236,330 @@ public class FormularioVendaControlador implements ActionListener, KeyListener {
                     quantidadeExiste = vendaItemDtosCarrinho.get(produtoAtual.getNome()).getQuantidade();
                 }
                 
-                int quantidade = Integer.valueOf(formularioVenda.getCampoDeTextoQuantidade().getText().trim());
+                int quantidade = Integer.parseInt(quantidadeString);
                 quantidade += quantidadeExiste;
             
-                
+                desconto = converterStringParaBigDecimal(descontoString);
+                total = produtoAtual.getPreco().subtract(desconto)
+                        .multiply(BigDecimal.valueOf(quantidade));
             
                 VendaItemDto vendaItemDto = VendaItemDto.builder()
                         .preco(produtoAtual.getPreco())
-                        .desconto(desconto)
+                        .desconto(desconto.multiply(BigDecimal.valueOf(quantidade)))
+                        .produtoId(produtoAtual.getId())
                         .produtoNome(produtoAtual.getNome())
                         .total(total)
                         .quantidade(quantidade)
                         .build();
                 
-                vendaItemDto.setPreco(produto.get().getPreco());
-                vendaItemDto.setProdutoNome(produto.get().getNome());
-                vendaItemDto.setQuantidade(Integer.valueOf(quantidadeString));
+                vendaItemDtosCarrinho.put(produtoAtual.getNome(), vendaItemDto);
                 
-                vendaItemDto.setTotal(produto.get().getPreco()
-                        .multiply(BigDecimal.valueOf(vendaItemDto.getQuantidade())));
-                
-                System.out.println("Venda: " + vendaItemDto);
-                
-                vendaItemDto.setTotal(vendaItemDto.getPreco().subtract(vendaItemDto.getDesconto()));
-                
-                System.out.println("Venda1: " + vendaItemDto);
-                
-                vendaItemDtos.add(vendaItemDto);
-                vendaItemModelo = new VendaItemModelo(vendaItemDtos);
-                formularioVenda.getTabelaCarrinho().setModel(vendaItemModelo);
-                System.out.println(vendaItemDtos);
+                atualizarCarrinho();
+                atualizarValor();
+                limpaCampos();
+                estoque.setQuantidade(estoque.getQuantidade() - quantidade);
+                estoqueAtualiza.put(produtoAtual.getNome(), estoque);
             }
             
         } else {
-            formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, "Produto nao no estoque ou bloqueado");
+            formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, "Produto bloqueado ou nao no estoque");
         }
     }
     
-    private void validaCampo(String texto) {
+    private void atualizarCarrinho() {
+        vendaItemModelo = new VendaItemModelo(vendaItemDtosCarrinho);
+        formularioVenda.getTabelaCarrinho().setModel(vendaItemModelo);
+    }
+    
+    private void atualizarValor() {
+        formularioVenda.getLabelVendaTotal().setText(getTotalVenda().setScale(2, RoundingMode.DOWN).toString());
+        formularioVenda.getLabelVendaDesconto().setText(getDesconto().setScale(2, RoundingMode.DOWN).toString());
+    }
+    
+    private BigDecimal getTotalVenda() {
+        double totalVenda = this.vendaItemDtosCarrinho.values()
+                .stream()
+                .collect(Collectors.summingDouble(v -> v.getTotal().doubleValue()));
+        return BigDecimal.valueOf(totalVenda);
+    }
+    
+    private BigDecimal getDesconto() {
+        double descontoVenda = this.vendaItemDtosCarrinho.values()
+                .stream()
+                .collect(Collectors.summingDouble(v -> v.getDesconto().doubleValue()));
+        
+        return BigDecimal.valueOf(descontoVenda);
+    }
+    
+    private void limpaCampos() {
+        formularioVenda.getCampoDeTextoBuscarPeloId().setText("");
+        formularioVenda.getCampoDeTextoQuantidade().setText("");
+        formularioVenda.getCampoDeTextoDesconto().setText("");
+    }
+    
+    private void validaCampo(String texto, String campo) {
         if (texto.isBlank()) {
-            formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, "Campos obrigatorios");
+            formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, "Campos obrigatorios: " + campo);
             throw new RuntimeException();
         }
     }
+    
+    private BigDecimal converterStringParaBigDecimal(String texto) {
+        try {
+            if (!texto.isBlank()) {
+                Double valor = Double.valueOf(texto);
+                return BigDecimal.valueOf(valor);
+            }
+            return BigDecimal.ZERO;
+        } catch (Exception e) {
+            String mensagem = "Valor invalido";
+            System.out.println(e);
+            throw new RuntimeException(mensagem, e);
+        }
+    }
+    
+    private void limpaCarrinho() {
+        vendaItemDtosCarrinho = new HashMap<>();
+        atualizarCarrinho();
+        atualizarValor();
+        limpaDetalhesDaBuscaDoProduto();
+    }
+    
+    private void removerProdutoNoCarrinho() {
+        String nomeDoProduto = selectionaProdutoNoCarrinho();
+        vendaItemDtosCarrinho.remove(nomeDoProduto);
+        estoqueAtualiza.remove(nomeDoProduto);
+        atualizarCarrinho();
+        atualizarValor();
+    }
+    
+    private String selectionaProdutoNoCarrinho() {
+        int index = formularioVenda.getTabelaCarrinho().getSelectedRow();
+        System.out.println("SELECIONADO : " + index);
+        if (index != -1) {
+           Object nomeProduto = formularioVenda.getTabelaCarrinho().getModel().getValueAt(index, 0);
+           return nomeProduto.toString();
+        } 
+        String mensagem = "Deves seleciona o produto";
+        formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
+        throw new RuntimeException();
+    }
+    
+    private void vender() {
+        if (!vendaItemDtosCarrinho.isEmpty()) {
+            String valorString = formularioVenda.getCampoDeTextoValorPago().getText().trim();
+            String cliente = formularioVenda.getCampoDeTextoClienteCPF().getText().trim();
+            
+            validaCampo(valorString, "Valor Pago");
+            validaCampo(cliente, "CPF do cliente");
+            validaCliente(cliente);
+            validaSeValorInsiridoENumero(valorString);
+            
+            Cliente clienteRegistado = buscaCliente(cliente);
+            
+            BigDecimal valorPago = converterStringParaBigDecimal(valorString);            
+            BigDecimal totalVenda = getTotalVenda();
+            BigDecimal desconto = getDesconto();
+            
+            if (valorPago.compareTo(totalVenda) >= 0 ) {
+                Venda venda = Venda.builder()
+                        .id(vendaId)
+                        .totalVenda(totalVenda)
+                        .valorPago(valorPago)
+                        .troco(valorPago.subtract(totalVenda))
+                        .desconto(desconto)
+                        .clienteId(clienteRegistado.getId())
+                        .usuarioId(formularioVenda.getUsuarioId())
+                        .build();
+                
+                if (vendaId == null) {
+                    venda.setDataCriacao(LocalDateTime.now());
+                    
+                } else {
+                    venda.setUltimaActualizacao(LocalDateTime.now());
+                }
+                
+                VendaRequestDto vendaRequestDto = VendaRequestDto.builder()
+                        .venda(venda)
+                        .vendaItems(getVendaItem())
+                        .build();
+                
+                String mensagem = vendaRepositorio.salvarVenda(vendaRequestDto);
+                
+                if (mensagem.startsWith("Venda registrado")) {
+                    formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.SUCESSO, mensagem);
+                    atualizaDoEstoque();
+                    limpaCarrinho();
+                    atualizaTabelaVenda();
+                    formularioVenda.getFormularioPrincipal().getCartao2().getLabelCartaoValor().setText("Total " + vendaResponseDtos.size());
+                } else {
+                    formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
+                }
+            } else {
+                formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, "Valor de pagamento insuficiente");
+            }            
+            
+        } else {
+            formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, "Nao ha produto no carrinho");
+        }
+    }
+    
+    private void atualizaDoEstoque() {
+        System.out.println("ESTOQUE::: " + estoqueAtualiza);
+        try {
+            estoqueAtualiza.values()
+                    .stream()
+                    .forEach(e -> {
+                        estoqueServico.salvar(e);
+                        Optional<Produto> produtoEncontrado = produtoServico.encontrarPeloId(e.getProdutoId());
+                        if (produtoEncontrado.isPresent()) {
+                            EstoqueHistorico estoqueHistorico = EstoqueHistorico.builder()
+                                    .produto(produtoEncontrado.get().getNome())
+                                    .tipo(EstoqueTipo.SAIDA.name())
+                                    .observacao("Venda")
+                                    .quantidade(e.getQuantidade())
+                                    .usuario(e.getUsuarioId().toString())
+                                    .dataCriacao(LocalDateTime.now())
+                                    .build();
+                            estoqueHistoricoServico.salvar(estoqueHistorico);
+                        }
+                    });
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        EstoqueModelo estoqueModelo = new EstoqueModelo(estoqueServico.encontrarTodos());
+        EstoqueHistoricoModelo estoqueHistoricoModelo = new EstoqueHistoricoModelo(estoqueHistoricoServico.encontraTodos());
+        formularioVenda.getFormularioEstoque().getTabela().setModel(estoqueModelo);
+        formularioVenda.getFormularioPrincipal().getTabela().setModel(estoqueHistoricoModelo);
+    }
+    
+    private List<VendaItem> getVendaItem() {
+        return vendaItemDtosCarrinho.values()
+                .stream()
+                .map(vi -> {
+                    
+                    return VendaItem.builder()
+                            .produtoId(vi.getProdutoId())
+                            .quantidade(vi.getQuantidade())
+                            .total(vi.getTotal())
+                            .desconto(vi.getDesconto())
+                            .build();
+                    
+                }).toList();
+    }
+    
+    private Cliente buscaCliente(String cpf) {
+        Cliente cliente = clienteServico.encontrarClientePeloAtributoCPF(cpf);
+        
+        if (cliente == null) {
+            cliente = new Cliente();
+            cliente.setCpf(cpf);
+            clienteServico.salvar(cliente);
+            cliente = clienteServico.encontrarClientePeloAtributoCPF(cpf);
+        }
+        return cliente;
+    }
+    
+    private void validaCliente(String cliente) {
+        if (!ValidaCPForCNPJ.isCPF(cliente) && !ValidaCPForCNPJ.isCNPJ(cliente)) {
+            String mensagem = "Cliente invalido";
+            formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
+            throw new RuntimeException(mensagem);
+        }
+    }
+    
+    public void validaSeValorInsiridoENumero(String texto) {
+        try {
+            if (!texto.isBlank()) {
+                Double.valueOf(texto);
+            }
+        } catch (Exception e) {
+            formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, "Valor pago invalida");
+            throw new RuntimeException(e);
+        }
+    }
+    
+    private void limpezaGeral() {
+        limpaCampos();
+        limpaCarrinho();
+        limpaDetalhesDaBuscaDoProduto();
+        vendaId = null;
+        formularioVenda.getCampoDeTextoClienteCPF().setText("");
+        formularioVenda.getCampoDeTextoValorPago().setText("");
+        vendaItemDtosCarrinho = new HashMap<>();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        selectionaProdutoNoCarrinho();
+        selectionNaTabelaVenda();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {}
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
+
+    private void mostrarDetalhes() {
+        VendaResponseDto venda = selectionNaTabelaVenda();
+        formularioVenda.getDialogDetalhes().pack();
+        formularioVenda.getDialogDetalhes().setLocationRelativeTo(null);
+        formularioVenda.getDialogDetalhes().setVisible(true);
+        
+        DefaultListModel model = new DefaultListModel();
+        
+        venda.getVendaItemDtos().forEach(vi -> {
+//            System.out.println(vi);
+//            model.addElement(vi.getProdutoNome());
+            model.addElement(String.format("%d %s %.2f x %d = %.2f", 
+                vi.getProdutoId(), vi.getProdutoNome(), vi.getPreco(), 
+                vi.getQuantidade(), vi.getTotal()));
+        });
+        
+        String cliente = venda.getCliente() == null ? "Nao informado" : venda.getCliente();
+        
+        formularioVenda.getLabelDetalheTotal().setText(String.format("TOTAL R$: %s", venda.getTotalVenda()));
+        formularioVenda.getLabelDetalhesVendaId().setText(String.format("Extrato nº %s", venda.getId()));
+        formularioVenda.getLabelDetalhesCliente().setText(String.format("CPF/CNPJ consumidor: %s", cliente));
+        formularioVenda.getLabelDetalhesAtendente().setText(String.format("Atendente: %s", venda.getUsuario()));
+        formularioVenda.getLabelDetalhesTroco().setText(String.format("Troco R$: %s", venda.getTroco()));
+        formularioVenda.getLabelDetalhesValorPago().setText(String.format("Valor pago R$: %s", venda.getValorPago()));
+        formularioVenda.getLabelDetalhesData().setText(venda.getDataCriacao().toString());
+        formularioVenda.getListaDetalhesVenda().setModel(model);
+    }
+    
+    private VendaResponseDto selectionNaTabelaVenda() {
+        int index = formularioVenda.getTabela().getSelectedRow();
+
+        if (index != -1) {
+            VendaResponseDto venda = vendaResponseDtos.get(index);
+            vendaId = venda.getId();
+            List<VendaItemDto> vendaItemDtos = vendaItemRepositorio.encontrarVendaItemPelaVendaId(vendaId);
+            venda.setVendaItemDtos(vendaItemDtos);
+            return venda;
+        }
+        
+        String mensagem = "Deves seleciona uma venda";
+        JOptionPane.showMessageDialog(null, mensagem, "Seleciona tabela", JOptionPane.ERROR_MESSAGE);
+        throw new RuntimeException(mensagem);
+    }
+
+    private void atualizarVenda() {
+        limpezaGeral();
+        VendaResponseDto vendaResponseDto = selectionNaTabelaVenda();
+        vendaResponseDto.getVendaItemDtos()
+                .forEach(vi -> vendaItemDtosCarrinho.put(vi.getProdutoNome(), vi));
+        atualizarCarrinho();
+        atualizarValor();
+        formularioVenda.getCampoDeTextoClienteCPF().setText(vendaResponseDto.getCliente());
+        formularioVenda.getCampoDeTextoValorPago().setText(vendaResponseDto.getValorPago().toString());
+    }
+
 }

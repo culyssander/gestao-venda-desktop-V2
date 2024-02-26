@@ -59,7 +59,7 @@ public class Dashboard extends javax.swing.JFrame {
         formularioProduto = new FormularioProduto(usuarioId, cabecalho, dashboard);
         formularioEstoque = new FormularioEstoque(usuarioId, cabecalho, formularioPrincipal);
         formularioCliente = new FormularioCliente(usuarioId, cabecalho);
-        formularioVenda = new FormularioVenda(usuarioId, cabecalho);
+        formularioVenda = new FormularioVenda(usuarioId, cabecalho, formularioPrincipal, formularioEstoque);
         formularioUsuario = new FormularioUsuario(usuarioId, cabecalho);
         
         formulario = new Formulario(formularioProduto);
