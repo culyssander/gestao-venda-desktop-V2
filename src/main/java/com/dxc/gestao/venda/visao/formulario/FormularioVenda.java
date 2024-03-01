@@ -10,8 +10,10 @@ import com.dxc.gestao.venda.visao.componentes.ComboBox;
 import com.dxc.gestao.venda.visao.componentes.Mensagem;
 import com.dxc.gestao.venda.visao.componentes.Tabela;
 import com.dxc.gestao.venda.visao.util.MensagemUtil;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -49,6 +51,8 @@ public class FormularioVenda extends javax.swing.JPanel {
         inicializacao();
         
         formularioVendaControlador = new FormularioVendaControlador(this);
+        this.formularioPrincipal = formularioPrincipal;
+        this.formularioEstoque = formularioEstoque;
         this.cabecalho = cabecalho;
         layout = new MigLayout("fill, insets");
         background.setLayout(layout);
@@ -130,6 +134,7 @@ public class FormularioVenda extends javax.swing.JPanel {
         botaoCarrinhoLimpar.addActionListener(formularioVendaControlador);
         botaoCarrinhoRemover.addActionListener(formularioVendaControlador);
         botaoVender.addActionListener(formularioVendaControlador);
+        botaoPesquisar.addActionListener(formularioVendaControlador);
         botaoLimpa.addActionListener(formularioVendaControlador);
         comboBoxCategoria.addActionListener(formularioVendaControlador);
         comboBoxProduto.addActionListener(formularioVendaControlador);
@@ -341,8 +346,24 @@ public class FormularioVenda extends javax.swing.JPanel {
         return labelDetalhesVendaId;
     }
 
+    public JLabel getLabelQuantidadeCarrinho() {
+        return labelQuantidadeCarrinho;
+    }
+    
     public JList<String> getListaDetalhesVenda() {
         return listaDetalhesVenda;
+    }
+
+    public JDateChooser getDataInicial() {
+        return dataInicial;
+    }
+
+    public JDateChooser getDataFinal() {
+        return dataFinal;
+    }
+
+    public JButton getBotaoPesquisar() {
+        return botaoPesquisar;
     }
     
     
@@ -355,7 +376,7 @@ public class FormularioVenda extends javax.swing.JPanel {
         panelBoard2 = new com.dxc.gestao.venda.visao.componentes.PanelBoard();
         jLabel4 = new javax.swing.JLabel();
         panelCarrinho = new com.dxc.gestao.venda.visao.componentes.PanelCiclo();
-        jLabel5 = new javax.swing.JLabel();
+        labelQuantidadeCarrinho = new javax.swing.JLabel();
         campoDeTextoBuscarPeloId = new com.dxc.gestao.venda.visao.componentes.CampoDeTexto();
         comboBoxProduto = new com.dxc.gestao.venda.visao.componentes.ComboBox();
         comboBoxCategoria = new com.dxc.gestao.venda.visao.componentes.ComboBox();
@@ -416,10 +437,11 @@ public class FormularioVenda extends javax.swing.JPanel {
         panelBoard1 = new com.dxc.gestao.venda.visao.componentes.PanelBoard();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaVenda = new com.dxc.gestao.venda.visao.componentes.Tabela();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        dataInicial = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        dataFinal = new com.toedter.calendar.JDateChooser();
+        botaoPesquisar = new javax.swing.JButton();
 
         background.setBackground(new java.awt.Color(255, 255, 255));
         background.setOpaque(true);
@@ -456,22 +478,22 @@ public class FormularioVenda extends javax.swing.JPanel {
 
         panelCarrinho.setBackground(new java.awt.Color(0, 0, 70));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\carrinho.png")); // NOI18N
-        jLabel5.setText("0");
+        labelQuantidadeCarrinho.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelQuantidadeCarrinho.setForeground(new java.awt.Color(255, 255, 255));
+        labelQuantidadeCarrinho.setIcon(new javax.swing.ImageIcon("C:\\Users\\qculissander\\netbeans-desktop\\gestao-venda\\src\\main\\java\\com\\dxc\\gestao\\venda\\visao\\icon\\carrinho.png")); // NOI18N
+        labelQuantidadeCarrinho.setText("0");
 
         javax.swing.GroupLayout panelCarrinhoLayout = new javax.swing.GroupLayout(panelCarrinho);
         panelCarrinho.setLayout(panelCarrinhoLayout);
         panelCarrinhoLayout.setHorizontalGroup(
             panelCarrinhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+            .addComponent(labelQuantidadeCarrinho, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
         );
         panelCarrinhoLayout.setVerticalGroup(
             panelCarrinhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCarrinhoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(labelQuantidadeCarrinho, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -821,7 +843,7 @@ public class FormularioVenda extends javax.swing.JPanel {
             .addComponent(jSeparator5)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
@@ -950,8 +972,8 @@ public class FormularioVenda extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tabelaVenda);
 
-        jDateChooser1.setBackground(new java.awt.Color(255, 255, 255));
-        jDateChooser1.setForeground(new java.awt.Color(120, 120, 120));
+        dataInicial.setBackground(new java.awt.Color(255, 255, 255));
+        dataInicial.setForeground(new java.awt.Color(120, 120, 120));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(120, 120, 120));
@@ -961,8 +983,18 @@ public class FormularioVenda extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(120, 120, 120));
         jLabel3.setText("Data final:");
 
-        jDateChooser2.setBackground(new java.awt.Color(255, 255, 255));
-        jDateChooser2.setForeground(new java.awt.Color(120, 120, 120));
+        dataFinal.setBackground(new java.awt.Color(255, 255, 255));
+        dataFinal.setForeground(new java.awt.Color(120, 120, 120));
+
+        botaoPesquisar.setBackground(new java.awt.Color(0, 0, 70));
+        botaoPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botaoPesquisar.setForeground(new java.awt.Color(255, 255, 255));
+        botaoPesquisar.setText("Pesquisar");
+        botaoPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoPesquisarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelBoard1Layout = new javax.swing.GroupLayout(panelBoard1);
         panelBoard1.setLayout(panelBoard1Layout);
@@ -975,23 +1007,25 @@ public class FormularioVenda extends javax.swing.JPanel {
                     .addGroup(panelBoard1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(dataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelBoard1Layout.setVerticalGroup(
             panelBoard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBoard1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(14, 14, 14)
                 .addGroup(panelBoard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(dataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(botaoPesquisar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1036,6 +1070,10 @@ public class FormularioVenda extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
+    private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoPesquisarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane background;
@@ -1047,6 +1085,7 @@ public class FormularioVenda extends javax.swing.JPanel {
     private javax.swing.JButton botaoDetalhes;
     private javax.swing.JButton botaoImprimir;
     private com.dxc.gestao.venda.visao.componentes.Botao botaoLimpa;
+    private javax.swing.JButton botaoPesquisar;
     private javax.swing.JButton botaoRemover;
     private com.dxc.gestao.venda.visao.componentes.Botao botaoVender;
     private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoBuscarPeloId;
@@ -1056,9 +1095,9 @@ public class FormularioVenda extends javax.swing.JPanel {
     private com.dxc.gestao.venda.visao.componentes.CampoDeTexto campoDeTextoValorPago;
     private com.dxc.gestao.venda.visao.componentes.ComboBox comboBoxCategoria;
     private com.dxc.gestao.venda.visao.componentes.ComboBox comboBoxProduto;
+    private com.toedter.calendar.JDateChooser dataFinal;
+    private com.toedter.calendar.JDateChooser dataInicial;
     private javax.swing.JDialog dialogDetalhes;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1069,7 +1108,6 @@ public class FormularioVenda extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -1096,6 +1134,7 @@ public class FormularioVenda extends javax.swing.JPanel {
     private javax.swing.JLabel labelEstoqueQuantidade;
     private javax.swing.JLabel labelProdutoNome;
     private javax.swing.JLabel labelProdutoPreco;
+    private javax.swing.JLabel labelQuantidadeCarrinho;
     private javax.swing.JLabel labelVendaDesconto;
     private javax.swing.JLabel labelVendaTotal;
     private javax.swing.JLabel labelVendaTroco;

@@ -4,11 +4,13 @@ import com.dxc.gestao.venda.modelo.dto.VendaRequestDto;
 import com.dxc.gestao.venda.modelo.dto.VendaResponseDto;
 import com.dxc.gestao.venda.modelo.entidade.Venda;
 import java.math.BigDecimal;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class VendaRepositorioImpl extends CrudRepositorioImpl<Venda>{
     
@@ -23,6 +25,13 @@ public class VendaRepositorioImpl extends CrudRepositorioImpl<Venda>{
     public String salvarVenda(VendaRequestDto vendaRequestDto) {
         try {
             removeItemSeForAtualizaDaVenda(vendaRequestDto.getVenda().getId());
+            
+            if (vendaRequestDto.getVenda().getId() != null) {
+                Optional<Venda> vendaEncontrado = encontrarPeloId(vendaRequestDto.getVenda().getId());
+                if (vendaEncontrado.isPresent()) {
+                    vendaRequestDto.getVenda().setDataCriacao(vendaEncontrado.get().getDataCriacao());
+                }
+            }
             boolean resultado = salvar(vendaRequestDto.getVenda());
 
             if (resultado) {
@@ -50,12 +59,13 @@ public class VendaRepositorioImpl extends CrudRepositorioImpl<Venda>{
     }
     
     private void removeItemSeForAtualizaDaVenda(Long vendaId) {
+        System.out.println("DDDDDDDDD: " + vendaId);
         try {
             if (vendaId != null) {
-                vendaItemRepositorio.removerPeloId(vendaId);
+                vendaItemRepositorio.removerVendaItemPeloId(vendaId);
             }
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("ERROR" + e);
         }
     }
 
@@ -78,7 +88,7 @@ public class VendaRepositorioImpl extends CrudRepositorioImpl<Venda>{
     
     public List<VendaResponseDto> encontrarTodosPersonalizado() {
         String SQL = "SELECT v.*, u.nome, c.cpf FROM 	venda v, cliente c, usuario u "
-                + "WHERE v.clienteid = c.id AND v.usuarioId = u.id;";
+                + "WHERE v.clienteid = c.id AND v.usuarioId = u.id ORDER BY v.id";
         List<VendaResponseDto> lista = new ArrayList<>();
         try {
             ResultSet resultSet = getConexao().obterConexao()
@@ -109,4 +119,28 @@ public class VendaRepositorioImpl extends CrudRepositorioImpl<Venda>{
                 .build();
     }
     
+    public List<VendaResponseDto> encontrarPelaDataCriacao(LocalDateTime dataInicial, LocalDateTime dataFinal) {
+        List<VendaResponseDto> lista = new ArrayList<>();
+        try {
+            String SQL = "SELECT v.*, u.nome, c.cpf FROM 	venda v, cliente c, usuario u WHERE v.clienteid = c.id AND v.usuarioId = u.id AND " +
+                            "v.dataCriacao BETWEEN ? AND ?  ORDER BY v.id";
+            
+            PreparedStatement preparedStatement = getConexao().obterConexao()
+                    .prepareStatement(SQL);
+            
+            preparedStatement.setObject(1, dataInicial);
+            preparedStatement.setObject(2, dataFinal);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            while(resultSet.next()) {
+                lista.add(getVendaResponseDto(resultSet));
+            }
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        return lista;
+    }
 }

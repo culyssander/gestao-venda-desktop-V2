@@ -66,6 +66,7 @@ com\dxc\gestao\venda\visao\formulario\FormularioUsuario$3.class
 com\dxc\gestao\venda\visao\formulario\FormularioPrincipal$3.class
 com\dxc\gestao\venda\visao\componentes\Mensagem$TipoDeMensagem.class
 com\dxc\gestao\venda\visao\componentes\Tabela$1.class
+com\dxc\gestao\venda\visao\formulario\FormularioVenda$7.class
 com\dxc\gestao\venda\visao\util\MensagemUtil$1.class
 com\dxc\gestao\venda\modelo\servico\PermissaoServico.class
 com\dxc\gestao\venda\modelo\entidade\Permissao.class

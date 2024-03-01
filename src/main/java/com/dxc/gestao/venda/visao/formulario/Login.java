@@ -115,7 +115,7 @@ public class Login extends javax.swing.JFrame {
     }
  */   
     private void moveTelaLogin(JFrame frame) {
-        panelMovimento.addMouseListener(new MouseAdapter() {
+        panelMovimento1.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 x = getX();
@@ -123,10 +123,9 @@ public class Login extends javax.swing.JFrame {
             }
         });
         
-        panelMovimento.addMouseMotionListener(new MouseAdapter(){
+        panelMovimento1.addMouseMotionListener(new MouseAdapter(){
             @Override
             public void mouseDragged(MouseEvent e) {
-                
                 frame.setLocation(e.getXOnScreen() - x, e.getYOnScreen() - y);
             }
         });

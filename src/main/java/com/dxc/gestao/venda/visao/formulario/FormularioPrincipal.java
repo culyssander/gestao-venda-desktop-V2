@@ -22,6 +22,7 @@ public class FormularioPrincipal extends javax.swing.JPanel {
     private FormularioPrincipalControlador controlador;
     private Long usuarioId;
     private Cabecalho cabecalho;
+    private int menuSelectionadoIndex = 0;
 
     public FormularioPrincipal(Long usuarioId, Cabecalho cabecalho) {
         initComponents();
@@ -36,6 +37,19 @@ public class FormularioPrincipal extends javax.swing.JPanel {
         inicializarCartao();
         
         evento();
+        eventoDoTeclado();
+    }
+
+    public int getMenuSelectionadoIndex() {
+        return menuSelectionadoIndex;
+    }
+
+    public void setMenuSelectionadoIndex(int menuSelectionadoIndex) {
+        this.menuSelectionadoIndex = menuSelectionadoIndex;
+    }
+    
+    private void eventoDoTeclado() {
+        cabecalho.getPesquisar().addKeyListener(controlador);
     }
 
     private void inicializarCartao() {

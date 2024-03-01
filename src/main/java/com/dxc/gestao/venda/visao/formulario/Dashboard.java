@@ -5,9 +5,9 @@ import com.dxc.gestao.venda.modelo.entidade.Usuario;
 import com.dxc.gestao.venda.visao.componentes.Cabecalho;
 import com.dxc.gestao.venda.visao.componentes.Menu;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 public class Dashboard extends javax.swing.JFrame {
     private DashboardControlador dashboardControlador;
@@ -33,7 +33,8 @@ public class Dashboard extends javax.swing.JFrame {
             formularioProduto.setMenuSelectionadoIndex(e);
             formularioEstoque.setMenuSelectionadoIndex(e);
             formularioVenda.setMenuSelectionadoIndex(e);
-            
+            formularioPrincipal.setMenuSelectionadoIndex(e);
+            System.out.println(e);
             switch (e) {
                 case 0 -> { setForm(formularioPrincipal); }
                 case 1 -> { setForm(formularioProduto); }
@@ -41,6 +42,7 @@ public class Dashboard extends javax.swing.JFrame {
                 case 3 -> { setForm(formularioCliente); }
                 case 4 -> { setForm(formularioVenda); }
                 case 5 -> { setForm(formularioUsuario); }
+                case 11 -> { fecharTela();}
             }
         });
         
@@ -52,7 +54,14 @@ public class Dashboard extends javax.swing.JFrame {
         menu1.inicializar(usuario);
         dashboardControlador = new DashboardControlador(this);
     }
-    
+
+    private void fecharTela() {
+        int opcao = JOptionPane.showConfirmDialog(null, "Tens certeza?", "Sair", JOptionPane.YES_NO_OPTION);
+        if (opcao == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }
+
     private void inicializaFormulario(Long usuarioId, Cabecalho cabecalho, Dashboard dashboard) {
         System.out.println("DASHBOARD: " + usuarioId);
         formularioPrincipal = new FormularioPrincipal(usuarioId, cabecalho);

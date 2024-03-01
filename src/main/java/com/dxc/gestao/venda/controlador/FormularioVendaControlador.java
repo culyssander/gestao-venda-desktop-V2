@@ -7,7 +7,9 @@ import com.dxc.gestao.venda.modelo.entidade.Cliente;
 import com.dxc.gestao.venda.modelo.entidade.Estoque;
 import com.dxc.gestao.venda.modelo.entidade.EstoqueHistorico;
 import com.dxc.gestao.venda.modelo.entidade.EstoqueTipo;
+import com.dxc.gestao.venda.modelo.entidade.Perfil;
 import com.dxc.gestao.venda.modelo.entidade.Produto;
+import com.dxc.gestao.venda.modelo.entidade.Usuario;
 import com.dxc.gestao.venda.modelo.entidade.Venda;
 import com.dxc.gestao.venda.modelo.entidade.VendaItem;
 import com.dxc.gestao.venda.modelo.repositorio.impl.VendaItemRepositorioImpl;
@@ -16,7 +18,9 @@ import com.dxc.gestao.venda.modelo.servico.CategoriaServico;
 import com.dxc.gestao.venda.modelo.servico.ClienteServico;
 import com.dxc.gestao.venda.modelo.servico.EstoqueHistoricoServico;
 import com.dxc.gestao.venda.modelo.servico.EstoqueServico;
+import com.dxc.gestao.venda.modelo.servico.PermissaoServico;
 import com.dxc.gestao.venda.modelo.servico.ProdutoServico;
+import com.dxc.gestao.venda.modelo.servico.UsuarioServico;
 import com.dxc.gestao.venda.modelo.tabela.modelo.EstoqueHistoricoModelo;
 import com.dxc.gestao.venda.modelo.tabela.modelo.EstoqueModelo;
 import com.dxc.gestao.venda.modelo.tabela.modelo.VendaItemModelo;
@@ -32,12 +36,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
@@ -49,9 +59,11 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
     private final ProdutoServico produtoServico;
     private final CategoriaServico categoriaServico;
     private final ClienteServico clienteServico;
+    private final PermissaoServico permissaoServico;
     private final EstoqueHistoricoServico estoqueHistoricoServico;
     private final VendaRepositorioImpl vendaRepositorio;
     private final VendaItemRepositorioImpl vendaItemRepositorio;
+    private final UsuarioServico usuarioServico;
     private VendaItemModelo vendaItemModelo;
     private VendaModelo vendaModelo;
     private static Estoque estoque;
@@ -60,6 +72,9 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
     private static Map<String, VendaItemDto> vendaItemDtosCarrinho;
     private static Map<String, Estoque> estoqueAtualiza;
     private static List<VendaResponseDto> vendaResponseDtos;
+    private final long PERMISSAO_ID_PARA_SALVAR_VENDA = 16;
+    private final long PERMISSAO_ID_PARA_ATUALIZAR_VENDA = 17;
+    private final long PERMISSAO_ID_PARA_REMOVER_VENDA = 18;
    
 
     public FormularioVendaControlador(FormularioVenda formularioVenda) {
@@ -68,6 +83,8 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
         produtoServico = new ProdutoServico();
         categoriaServico = new CategoriaServico();
         clienteServico = new ClienteServico();
+        permissaoServico = new PermissaoServico();
+        usuarioServico = new UsuarioServico();
         estoqueHistoricoServico = new EstoqueHistoricoServico(formularioVenda.getUsuarioId());
         vendaRepositorio = new VendaRepositorioImpl();
         vendaItemRepositorio = new VendaItemRepositorioImpl();
@@ -79,11 +96,22 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
     
     private void atualizaTabelaVenda() {
         vendaResponseDtos = vendaRepositorio.encontrarTodosPersonalizado();
+        
+        Usuario usuario = usuarioServico.encontrarPeloId(formularioVenda.getUsuarioId());
+        
+        if (usuario.getPerfil().equalsIgnoreCase(Perfil.PADRAO.name())) {
+            vendaResponseDtos = vendaResponseDtos.stream()
+                    .filter(v -> v.getUsuario().equals(usuario.getNome()))
+                    .toList();
+        }
+        
         vendaModelo = new VendaModelo(vendaResponseDtos);
         formularioVenda.getTabela().setModel(vendaModelo);
     }
     
     private void adicionar() {
+        permissaoServico.validaPermissao(formularioVenda.getUsuarioId(), PERMISSAO_ID_PARA_SALVAR_VENDA);
+        limpezaGeral();
         formularioVenda.getDialog().pack();
         formularioVenda.getDialog().setLocationRelativeTo(null);
         formularioVenda.getDialog().setVisible(true);
@@ -104,8 +132,10 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
             case "limpa" -> {limpezaGeral();}
             case "vender" -> {vender();}
             case "detalhes" -> { mostrarDetalhes();}
-            
+            case "remover" -> { removerVenda(); }
+            case "pesquisar" -> { pesquisaPelaData(); }
         }
+        
     }
 
     @Override
@@ -118,7 +148,21 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
     public void keyReleased(KeyEvent e) {
         
         if (formularioVenda.getMenuSelectionadoIndex() == 4) {
+            String texto = formularioVenda.getCabecalho().getPesquisar().getText().trim();
             
+            if (texto.isBlank()) {
+                atualizaTabelaVenda();
+            } else {
+                List<VendaResponseDto> lista = vendaResponseDtos.stream()
+                        .filter(v -> {
+                            if (v.getCliente() != null) 
+                                return v.getCliente().contains(texto);
+                            
+                            return false;
+                        })
+                        .toList();
+                atualizaTabelaVenda(lista);
+            }
         }
 
         String produtoIdString = formularioVenda.getCampoDeTextoBuscarPeloId().getText().trim();
@@ -127,6 +171,7 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
                 Long produtoId = Long.valueOf(produtoIdString);
                 produto = buscarProdutoPeloId(produtoId);
                 mostrarValoresNoQuadro(produto);
+                return;
             } catch (Exception ex) {
                 formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, "Erro na busca do produto");
             }
@@ -145,6 +190,7 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
         
         String descontoString = formularioVenda.getCampoDeTextoDesconto().getText().trim();
         validaSeValorInsiridoENumero(descontoString);        
+        
     }
     
     private Optional<Produto> buscarProdutoPeloId(Long produtoId) {
@@ -267,6 +313,7 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
     }
     
     private void atualizarCarrinho() {
+        formularioVenda.getLabelQuantidadeCarrinho().setText("" + vendaItemDtosCarrinho.size());
         vendaItemModelo = new VendaItemModelo(vendaItemDtosCarrinho);
         formularioVenda.getTabelaCarrinho().setModel(vendaItemModelo);
     }
@@ -327,6 +374,12 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
     
     private void removerProdutoNoCarrinho() {
         String nomeDoProduto = selectionaProdutoNoCarrinho();
+        
+        if (nomeDoProduto == null) {
+            String mensagem = "Deves seleciona o produto";
+            formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
+            throw new RuntimeException();
+        }
         vendaItemDtosCarrinho.remove(nomeDoProduto);
         estoqueAtualiza.remove(nomeDoProduto);
         atualizarCarrinho();
@@ -340,9 +393,7 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
            Object nomeProduto = formularioVenda.getTabelaCarrinho().getModel().getValueAt(index, 0);
            return nomeProduto.toString();
         } 
-        String mensagem = "Deves seleciona o produto";
-        formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.ERRO, mensagem);
-        throw new RuntimeException();
+        return null;
     }
     
     private void vender() {
@@ -374,7 +425,6 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
                 
                 if (vendaId == null) {
                     venda.setDataCriacao(LocalDateTime.now());
-                    
                 } else {
                     venda.setUltimaActualizacao(LocalDateTime.now());
                 }
@@ -390,6 +440,7 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
                     formularioVenda.getMensagem().mostrarMensagem(Mensagem.TipoDeMensagem.SUCESSO, mensagem);
                     atualizaDoEstoque();
                     limpaCarrinho();
+                    vendaResultadoFinal(venda);
                     atualizaTabelaVenda();
                     formularioVenda.getFormularioPrincipal().getCartao2().getLabelCartaoValor().setText("Total " + vendaResponseDtos.size());
                 } else {
@@ -404,6 +455,13 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
         }
     }
     
+    private void vendaResultadoFinal(Venda venda) {
+        formularioVenda.getLabelVendaTotal().setText(venda.getTotalVenda().setScale(2, RoundingMode.DOWN).toString());
+        formularioVenda.getLabelVendaDesconto().setText(venda.getDesconto().setScale(2, RoundingMode.DOWN).toString());
+        formularioVenda.getLabelVendaValorPago().setText(venda.getValorPago().setScale(2, RoundingMode.DOWN).toString());
+        formularioVenda.getLabelVendaTroco().setText(venda.getTroco().setScale(2, RoundingMode.DOWN).toString());
+    }
+    
     private void atualizaDoEstoque() {
         System.out.println("ESTOQUE::: " + estoqueAtualiza);
         try {
@@ -413,12 +471,18 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
                         estoqueServico.salvar(e);
                         Optional<Produto> produtoEncontrado = produtoServico.encontrarPeloId(e.getProdutoId());
                         if (produtoEncontrado.isPresent()) {
+                            int quantidade = 0;
+                            for (VendaItemDto vi : vendaItemDtosCarrinho.values()) {
+                                if (vi.getProdutoId().equals(e.getProdutoId()))
+                                    quantidade = vi.getQuantidade();
+                            }
+
                             EstoqueHistorico estoqueHistorico = EstoqueHistorico.builder()
                                     .produto(produtoEncontrado.get().getNome())
                                     .tipo(EstoqueTipo.SAIDA.name())
                                     .observacao("Venda")
-                                    .quantidade(e.getQuantidade())
-                                    .usuario(e.getUsuarioId().toString())
+                                    .quantidade(quantidade)
+                                    .usuario(formularioVenda.getUsuarioId().toString())
                                     .dataCriacao(LocalDateTime.now())
                                     .build();
                             estoqueHistoricoServico.salvar(estoqueHistorico);
@@ -487,6 +551,12 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
         formularioVenda.getCampoDeTextoClienteCPF().setText("");
         formularioVenda.getCampoDeTextoValorPago().setText("");
         vendaItemDtosCarrinho = new HashMap<>();
+        formularioVenda.getLabelVendaTotal().setText("0.00");
+        formularioVenda.getLabelVendaDesconto().setText("0.00");
+        formularioVenda.getLabelVendaValorPago().setText("0.00");
+        formularioVenda.getLabelVendaTroco().setText("0.00");
+    
+        
     }
 
     @Override
@@ -508,6 +578,7 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
     public void mouseExited(MouseEvent e) {}
 
     private void mostrarDetalhes() {
+//        limpezaGeral();
         VendaResponseDto venda = selectionNaTabelaVenda();
         formularioVenda.getDialogDetalhes().pack();
         formularioVenda.getDialogDetalhes().setLocationRelativeTo(null);
@@ -516,8 +587,6 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
         DefaultListModel model = new DefaultListModel();
         
         venda.getVendaItemDtos().forEach(vi -> {
-//            System.out.println(vi);
-//            model.addElement(vi.getProdutoNome());
             model.addElement(String.format("%d %s %.2f x %d = %.2f", 
                 vi.getProdutoId(), vi.getProdutoNome(), vi.getPreco(), 
                 vi.getQuantidade(), vi.getTotal()));
@@ -546,20 +615,80 @@ public class FormularioVendaControlador implements ActionListener, KeyListener, 
             return venda;
         }
         
-        String mensagem = "Deves seleciona uma venda";
-        JOptionPane.showMessageDialog(null, mensagem, "Seleciona tabela", JOptionPane.ERROR_MESSAGE);
-        throw new RuntimeException(mensagem);
+        return null;
     }
 
     private void atualizarVenda() {
-        limpezaGeral();
+        permissaoServico.validaPermissao(formularioVenda.getUsuarioId(), PERMISSAO_ID_PARA_ATUALIZAR_VENDA);
+//        limpezaGeral();
         VendaResponseDto vendaResponseDto = selectionNaTabelaVenda();
+        
+        if (vendaResponseDto == null) {
+            String mensagem = "Deves seleciona uma venda";
+            JOptionPane.showMessageDialog(null, mensagem, "Seleciona tabela", JOptionPane.ERROR_MESSAGE);
+            throw new RuntimeException(mensagem);
+        }
+        
         vendaResponseDto.getVendaItemDtos()
                 .forEach(vi -> vendaItemDtosCarrinho.put(vi.getProdutoNome(), vi));
         atualizarCarrinho();
         atualizarValor();
         formularioVenda.getCampoDeTextoClienteCPF().setText(vendaResponseDto.getCliente());
         formularioVenda.getCampoDeTextoValorPago().setText(vendaResponseDto.getValorPago().toString());
+        
+        formularioVenda.getDialog().pack();
+        formularioVenda.getDialog().setLocationRelativeTo(null);
+        formularioVenda.getDialog().setVisible(true);
+    }
+
+    private void removerVenda() {
+        permissaoServico.validaPermissao(formularioVenda.getUsuarioId(), PERMISSAO_ID_PARA_REMOVER_VENDA);
+        VendaResponseDto venda = selectionNaTabelaVenda();
+        
+        if (venda != null) {
+            int confirma = JOptionPane.showConfirmDialog(null, "Tens certeza?", "Remover venda", JOptionPane.YES_NO_OPTION);
+            
+            if (confirma == JOptionPane.YES_OPTION) {
+                vendaRepositorio.removerPeloId(venda.getId());
+                JOptionPane.showMessageDialog(null, "Venda removido com sucesso!");
+                atualizaTabelaVenda();
+                return;
+            }
+            
+        }
+        String mensagem = "Deves seleciona uma venda";
+        JOptionPane.showMessageDialog(null, mensagem, "Seleciona tabela", JOptionPane.ERROR_MESSAGE);
+        throw new RuntimeException(mensagem);
+    }
+
+    private void pesquisaPelaData() {
+        Date dataInicial = formularioVenda.getDataInicial().getDate();
+        Date dataFinal = formularioVenda.getDataFinal().getDate();
+
+        LocalTime tempoInicial = LocalTime.of(0, 0, 0);
+        LocalTime tempoFinal = LocalTime.of(23, 59, 59);
+
+        if (dataInicial != null && dataFinal != null) {
+            try {
+                LocalDate dataInicalLocal = LocalDate.ofInstant(dataInicial.toInstant(), ZoneId.systemDefault());
+                LocalDate dataFinalLocal = LocalDate.ofInstant(dataFinal.toInstant(), ZoneId.systemDefault());
+
+                LocalDateTime inicial = LocalDateTime.of(dataInicalLocal, tempoInicial);
+                LocalDateTime dfinal = LocalDateTime.of(dataFinalLocal, tempoFinal);
+
+                List<VendaResponseDto> lista = vendaRepositorio.encontrarPelaDataCriacao(inicial, dfinal);
+                atualizaTabelaVenda(lista);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } else {
+            atualizaTabelaVenda();
+        }
+    }
+
+    private void atualizaTabelaVenda(List<VendaResponseDto> lista) {
+        vendaModelo = new VendaModelo(lista);
+        formularioVenda.getTabela().setModel(vendaModelo);
     }
 
 }

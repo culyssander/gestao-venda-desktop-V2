@@ -2,12 +2,13 @@ package com.dxc.gestao.venda.modelo.repositorio.impl;
 
 import com.dxc.gestao.venda.modelo.dto.VendaItemDto;
 import com.dxc.gestao.venda.modelo.entidade.VendaItem;
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VendaItemRepositorioImpl extends CrudRepositorioImpl<VendaItem> {
 
@@ -15,11 +16,13 @@ public class VendaItemRepositorioImpl extends CrudRepositorioImpl<VendaItem> {
         super(VendaItem.class);
     }
 
-    @Override
-    public boolean removerPeloId(Long id) {
-        if (existePeloId(id)) {
+    public boolean removerVendaItemPeloId(Long id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("vendaId", id);
+        
+        if (existePeloAtributoEValor(map)) {
             try {
-                String SQL = "DELETE FROM %s WHERE vendaId = ?";
+                String SQL = "DELETE FROM vendaItem WHERE vendaId = ?";
                 PreparedStatement preparedStatement = getConexao().obterConexao()
                         .prepareStatement(SQL);
                 preparedStatement.setLong(1, id);
@@ -32,7 +35,7 @@ public class VendaItemRepositorioImpl extends CrudRepositorioImpl<VendaItem> {
 
                 return true;
             } catch (SQLException e) {
-                System.out.println(e);
+                System.out.println("ERROR" + e);
                 throw new RuntimeException(e);
             }
         }
